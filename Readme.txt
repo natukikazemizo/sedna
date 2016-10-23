@@ -270,24 +270,32 @@
 ******************************
 ** Python3ソース            **
 ******************************
- - CloneRotations.py
+ - clone_rotations.py
      作成保留中
- - CopyBoneConstraints.py
+ - copy_Bone_constraints.py
      Armature間でBoneのConstraintsをコピーします。
      ただし、CopyIK,CopyRotationの二種類のConstraintsのコピーにしか
      対応していません。
- - CopyBoneLimits.py
+ - copy_bone_limits.py
      Armature間でBoneのIK関連のLimitとStretchをコピーします。
- - CtrlHandlers.py
+ - ctrl_handlers.py
      1フレームに一回呼び出されて、テキストオブジェクトを制御しています。
      今後各種機能を追加する可能性があります。
- - EditFCurves
+ - edit_Fcurves
      fcurvesのコピーをするのに利用しました。
- - MoveKeys
+ - flip_back_paste_pose.py
+     歩き/走りのモーション作成が少し楽になるスクリプトです。
+     17-32フレームのポーズを左右反転して1-16フレームにコピーします。
+     最後に1フレーム目のポーズを33フレーム目にコピーします。
+ - flip_next_paste_pose.py
+     歩き/走りのモーション作成が少し楽になるスクリプトです。
+     1-16フレームのポーズを左右反転して17-32フレームにコピーします。
+     最後に1フレーム目のポーズを33フレーム目にコピーします。
+ - move_keys
      遅延の動きを実現するための試作ソースです。
- - MuteIK
+ - mute_IK
      Pose Modeで選択されたボーンに含まれるIKを無効（mute状態）にします。
- - RenameBone.py
+ - rename_bone.py
      選択したボーンの名称の頭に"Pose."をつけます。
 
 ********************
@@ -449,7 +457,8 @@ Translator:山田宏一 蓮實重彥
  - 空気遠近法だと遠景は青色に近づくという知識を得たので、
    コンポジットノードで距離依存で近づく色を、
    空レイヤーの色から青色に変更しました。
- 
+ - キーフレーム範囲を指定して、ボーンのポーズを
+   左右反転コピーするスクリプトを追加しました。
 2016.10.16 Sun Ver 0.08 公開
  * 靴のMeshの破綻を修正
  * Jody関連のNLAトラックを整理し、現在のリグでは動作しない
