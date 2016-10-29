@@ -1,6 +1,6 @@
 #Sedna
 
-##本プロジェクトの目的  Purpose of the project Sedna.
+##[本プロジェクトの目的  Purpose of the project Sedna.](wiki/aim)
 
 1.短編アニメーションの作成。  
 Create Animated Short Film.  
