@@ -1,3 +1,3 @@
 #Sedna
 
-##[Wiki.](../../wiki/Home)
+##[Wiki](../../wiki/Home)
