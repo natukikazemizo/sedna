@@ -2,7 +2,23 @@
 
 曲名と利用目的のメモ
 
-## HURT RECORD Part.3
+## HURT RECORD Part.1
+* cosmic racing  
+レース 明るい 軽い
+
+* rapid  
+テクノ　軽い 早い  
+
+* Obscured  
+和風 さくらさくら 20secあたりからちょっとカッコイイ。
+
+* SAMURAI SWORD  
+和風ヒーロー
+
+
+
+
+## HURT RECORD Part.2
 * 雲の向こうへ  
 平和で安心しているシーン
 
