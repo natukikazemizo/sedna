@@ -1,4 +1,14 @@
-﻿2016.09.26 S.Maeyama Sedna 公開ファイルの説明文の内容推敲用に作成
+2017.01.15 Version 0.17 以降
+
+セルルック動画のための.blendファイルです <br>
+本ファイルをベースに自主制作アニメーションを作成予定です。 <br>
+<br>
+詳細情報は<br>
+https://github.com/natukikazemizo/sedna/wiki
+<br>を参照してください。
+
+
+2016.09.26 S.Maeyama Sedna 公開ファイルの説明文の内容推敲用に作成
 
 Ver0.10
 作成中の自主制作アニメーションの.blendファイルです。 <br>
