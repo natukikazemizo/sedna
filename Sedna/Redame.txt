@@ -1,12 +1,12 @@
 ============================================================
-  2Dアニメ風表現のための.blendファイル  Version 0.10
+  β版古典的アニメ風動画作成環境
 ============================================================
  - プロジェクト名:Sedna（セドナ）
  - 製作者:natukikazemizo(ナツキカゼミゾ)
  - 種別:.blenderファイル
- - 開発環境:Blender v2.78a Windows 10(64bit)
+ - 開発環境:Blender v2.78c Windows 10(64bit)
  - 動作環境:開発環境以外では、未検証
- - 最終更新日:2016.10.30
+ - 最終更新日:https://github.com/natukikazemizo/sedna/wiki 参照
  - ファイル名:Sedna.blend
  - ウェブ:http://pixiv.me/natukikazemizo
  - E-mail:非公開
@@ -30,7 +30,7 @@
 ** レンダリング時間         **
 ******************************
   OS      :Windows10
-  Blender :v2.78a
+  Blender :v2.78c
   CPU     :Intel Core i5 vPro 2.60GHz
   Memory  :16.0 GB
   Resolution:X:1920 Y:1080
