@@ -2,7 +2,8 @@
 # -*- coding: UTF-8 -*-
 # Set Finger Constraints
 #
-# 2016.02.19 Natukikazemizo
+# 2017.05.03 Natukikazemizo
+
 import bpy
 import math
 import re
@@ -19,29 +20,118 @@ fromArmatureConstraintsDict = {}
 LR_LIST = ("L", "R")
 BONE_NAME_LIST = ("Little", "Ring", "Middle", "Index")
 POSITION_LIST = ("Root", "", "001", "002")
+THUMB_POSITION_LIST = {"002", "003"}
 
-print("Copy Finger Bone Constraints START")
+print("SET Finger Constraints")
 
 for lr in LR_LIST:
+    # SET UP Thumb
+    for pos in THUMB_POSITION_LIST:
+        ctrlBoneName = "Thumb.Ctrl_T_" + lr + "." + pos
+        targetBoneName = "Thumb_" + lr + "." + pos
+        constraint = bpy.context.object.pose.bones[targetBoneName].constraints["Transformation"]
+        constraint.subtarget = targetBoneName
+        constraint.from_min_x = -0.05
+        constraint.from_max_x = 0.05
+        constraint.map_to = 'ROTATION'
+        constraint.map_to_x_from = 'Z'
+        constraint.map_to_z_from = 'X'
+
+        constraint.to_min_z_rot = math.pi * 2 / 3
+        constraint.to_max_z_rot = -math.pi * 2 / 3
+#        if lr == "R":
+#            constraint.to_min_z_rot = math.pi * 2 / 3
+#            constraint.to_max_z_rot = -math.pi * 2 / 3
+#        else:
+#            constraint.to_min_z_rot = -math.pi * 2 / 3
+#            constraint.to_max_z_rot = math.pi * 2 / 3
+        constraint.target_space = 'LOCAL'
+        constraint.owner_space = 'LOCAL'
+    
+    # SET UP Index, Middle, Ring, Little
     for boneNameSheed in BONE_NAME_LIST:
         for pos in POSITION_LIST:
             # Create Bone Name
-            if pos == "Root":
-                fromBoneName = boneNameSheed + "_" + pos + ".Ctrl_" + lr
-                toBoneName = boneNameSheed + "_" + pos + "_" + lr
-            elif pos == "":
-                fromBoneName = boneNameSheed + ".Ctrl_" + lr
-                toBoneName = boneNameSheed + "_" + lr
+            
+            if pos == "002":
+                # SET COPY ROTATION
+                ctrlBoneName = boneNameSheed + "_" + lr + ".001"
+                targetBoneName = boneNameSheed + "_" + lr + "." + pos
+                
+                constraint = bpy.context.object.pose.bones[targetBoneName].constraints["Copy Rotation"]
+                constraint.target = bpy.data.objects["Jody_Armature"]
+                constraint.subtarget = ctrlBoneName
+                constraint.target_space = 'LOCAL'
+                constraint.owner_space = 'LOCAL'
+
             else:
-                fromBoneName = boneNameSheed + ".Ctrl_" + lr + "." + pos
-                toBoneName = boneNameSheed + "_" + lr + "." + pos
-            print(toBoneName)
-            # SET Copy Rotation
-            bpy.context.object.pose.bones[toBoneName].constraints["Copy Rotation"].subtarget = fromBoneName
-            bpy.context.object.pose.bones[toBoneName].constraints["Copy Rotation"].target_space = 'LOCAL'
-            bpy.context.object.pose.bones[toBoneName].constraints["Copy Rotation"].owner_space = 'LOCAL'
+                # SET TRANSFORM
+                
+                if pos == "Root":
+                    ctrlBoneName = boneNameSheed + ".Ctrl_T_" + lr
+                    targetBoneName = boneNameSheed + "_" + pos + "_" + lr
 
+                    constraint = bpy.context.object.pose.bones[targetBoneName].constraints["Transformation"]
+                    constraint.map_to = 'ROTATION'
+                    constraint.map_to_x_from = 'Z'
+                    constraint.map_to_z_from = 'X'
 
-print("Copy Bone Constraints END")
+                    constraint.subtarget = ctrlBoneName
+                    constraint.from_min_x = -0.02
+                    constraint.from_max_x = 0.02
+                    constraint.from_min_z = -0.02
+                    constraint.from_max_z = 0.02
+
+                    constraint.to_min_x_rot = math.pi / 36
+                    constraint.to_max_x_rot = -math.pi / 36
+                    
+                    constraint.to_min_z_rot = math.pi / 36
+                    constraint.to_max_z_rot = -math.pi / 36
+                elif pos == "":
+                    ctrlBoneName = boneNameSheed + ".Ctrl_T_" + lr
+                    targetBoneName = boneNameSheed + "_" + lr
+
+                    constraint = bpy.context.object.pose.bones[targetBoneName].constraints["Transformation"]
+                    constraint.map_to = 'ROTATION'
+                    constraint.map_to_x_from = 'Z'
+                    constraint.map_to_z_from = 'X'
+
+                    constraint.subtarget = ctrlBoneName
+                    constraint.from_min_x = -0.02
+                    constraint.from_max_x = 0.02
+                    constraint.from_min_z = -0.02
+                    constraint.from_max_z = 0.02
+
+                    constraint.to_min_x_rot = math.pi / 2
+                    constraint.to_max_x_rot = -math.pi / 2
+                    
+                    constraint.to_min_z_rot = math.pi / 2
+                    constraint.to_max_z_rot = -math.pi / 2
+
+                elif pos == "001":
+                    ctrlBoneName = boneNameSheed + ".Ctrl_T_" + lr + "." + pos
+                    targetBoneName = boneNameSheed + "_" + lr + "." + pos
+
+                    constraint = bpy.context.object.pose.bones[targetBoneName].constraints["Transformation"]
+                    constraint.map_to = 'ROTATION'
+
+                    constraint.subtarget = ctrlBoneName
+                    constraint.from_min_x = -0.05
+                    constraint.from_max_x = 0.05
+                    constraint.to_min_x_rot = math.pi * 2 / 3
+                    constraint.to_max_x_rot = -math.pi * 2 / 3
+            
+                if lr == "R":
+                    constraint.to_min_x_rot *= -1
+                    constraint.to_max_x_rot *= -1
+                    constraint.to_min_z_rot *= -1
+                    constraint.to_max_z_rot *= -1
+
+                constraint.target_space = 'LOCAL'
+                constraint.owner_space = 'LOCAL'
+
+            print(targetBoneName)
+
+print("SET Finger Constraints")
 
  
