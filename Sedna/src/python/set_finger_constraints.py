@@ -72,8 +72,8 @@ for lr in LR_LIST:
 
                     constraint = bpy.context.object.pose.bones[targetBoneName].constraints["Transformation"]
                     constraint.map_to = 'ROTATION'
-                    constraint.map_to_x_from = 'Z'
-                    constraint.map_to_z_from = 'X'
+                    constraint.map_to_x_from = 'X'
+                    constraint.map_to_z_from = 'Z'
 
                     constraint.subtarget = ctrlBoneName
                     constraint.from_min_x = -0.02
@@ -81,8 +81,8 @@ for lr in LR_LIST:
                     constraint.from_min_z = -0.02
                     constraint.from_max_z = 0.02
 
-                    constraint.to_min_x_rot = math.pi / 36
-                    constraint.to_max_x_rot = -math.pi / 36
+                    constraint.to_min_x_rot = -math.pi / 36
+                    constraint.to_max_x_rot = math.pi / 36
                     
                     constraint.to_min_z_rot = math.pi / 36
                     constraint.to_max_z_rot = -math.pi / 36
@@ -92,8 +92,8 @@ for lr in LR_LIST:
 
                     constraint = bpy.context.object.pose.bones[targetBoneName].constraints["Transformation"]
                     constraint.map_to = 'ROTATION'
-                    constraint.map_to_x_from = 'Z'
-                    constraint.map_to_z_from = 'X'
+                    constraint.map_to_x_from = 'X'
+                    constraint.map_to_z_from = 'Z'
 
                     constraint.subtarget = ctrlBoneName
                     constraint.from_min_x = -0.02
@@ -101,8 +101,8 @@ for lr in LR_LIST:
                     constraint.from_min_z = -0.02
                     constraint.from_max_z = 0.02
 
-                    constraint.to_min_x_rot = math.pi / 2
-                    constraint.to_max_x_rot = -math.pi / 2
+                    constraint.to_min_x_rot = -math.pi / 2
+                    constraint.to_max_x_rot = math.pi / 2
                     
                     constraint.to_min_z_rot = math.pi / 2
                     constraint.to_max_z_rot = -math.pi / 2
@@ -117,8 +117,8 @@ for lr in LR_LIST:
                     constraint.subtarget = ctrlBoneName
                     constraint.from_min_x = -0.05
                     constraint.from_max_x = 0.05
-                    constraint.to_min_x_rot = math.pi * 2 / 3
-                    constraint.to_max_x_rot = -math.pi * 2 / 3
+                    constraint.to_min_x_rot = -math.pi * 2 / 3
+                    constraint.to_max_x_rot = math.pi * 2 / 3
             
                 if lr == "R":
                     constraint.to_min_x_rot *= -1
