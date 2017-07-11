@@ -1,7 +1,7 @@
 #!BPY
 # -*- coding: UTF-8 -*-
 # Set Show Hide KeyFrames
-# 2017.06.25 Natukikazemizo
+# 2017.07.11 Natukikazemizo
 
 import bpy
 import math
@@ -13,27 +13,28 @@ PY_NAME = "SET SHOW HIDE KEY FRAMES"
 print(PY_NAME + " START")
 
 # parameters
-targetParentName = "Cubes"
+targetParentName = "Pos.Loris"
+hideFrame = 1364
+showFrame = 1363
+
+# Add Show or Hide Key Frame On Child Objects
+def addDispKeyChildren(obj, frame, hide):
+    for child in obj.children:
+        child.hide = hide
+        child.hide_render = hide
+        child.keyframe_insert('hide', frame = frame)
+        child.keyframe_insert('hide_render', frame = frame)
+        addDispKeyChildren(child, frame, hide)
 
 # set current frame
-bpy.data.scenes['Root.DorothyLoris'].frame_set(739)
+print("HIDE " + targetParentName + " DESCENDANTS AT FRAME:" + str(hideFrame))
+bpy.data.scenes['Root.DorothyLoris'].frame_set(hideFrame)
+addDispKeyChildren(bpy.data.objects[targetParentName], hideFrame, True)
 
-for child in bpy.data.objects[targetParentName].children:
-    if child.rigid_body.type == 'ACTIVE':
-        child.hide = True
-        child.hide_render = True
-        child.keyframe_insert('hide', frame=739)
-        child.keyframe_insert('hide_render', frame=739)
-
-bpy.data.scenes['Root.DorothyLoris'].frame_set(740)
-
-for child in bpy.data.objects[targetParentName].children:
-    if child.rigid_body.type == 'ACTIVE':
-        child.hide = False
-        child.hide_render = False
-        child.keyframe_insert('hide', frame=740)
-        child.keyframe_insert('hide_render', frame=740)
+# set current frame
+print("SHOW " + targetParentName + " DESCENDANTS AT FRAME:" + str(showFrame))
+bpy.data.scenes['Root.DorothyLoris'].frame_set(showFrame)
+addDispKeyChildren(bpy.data.objects[targetParentName], showFrame, False)
 
 print(PY_NAME + " END")
 
- 
