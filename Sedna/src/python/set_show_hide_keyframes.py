@@ -13,9 +13,9 @@ PY_NAME = "SET SHOW HIDE KEY FRAMES"
 print(PY_NAME + " START")
 
 # parameters
-targetParentName = "Pos.Loris"
-hideFrame = 1364
-showFrame = 1363
+targetParentName = "Dis_T"
+hideFrame = 1520
+showFrame = -1
 
 # Add Show or Hide Key Frame On Child Objects
 def addDispKeyChildren(obj, frame, hide):
@@ -27,14 +27,16 @@ def addDispKeyChildren(obj, frame, hide):
         addDispKeyChildren(child, frame, hide)
 
 # set current frame
-print("HIDE " + targetParentName + " DESCENDANTS AT FRAME:" + str(hideFrame))
-bpy.data.scenes['Root.DorothyLoris'].frame_set(hideFrame)
-addDispKeyChildren(bpy.data.objects[targetParentName], hideFrame, True)
+if hideFrame > 0 :
+    print("HIDE " + targetParentName + " DESCENDANTS AT FRAME:" + str(hideFrame))
+    bpy.data.scenes['Root.DorothyLoris'].frame_set(hideFrame)
+    addDispKeyChildren(bpy.data.objects[targetParentName], hideFrame, True)
 
 # set current frame
-print("SHOW " + targetParentName + " DESCENDANTS AT FRAME:" + str(showFrame))
-bpy.data.scenes['Root.DorothyLoris'].frame_set(showFrame)
-addDispKeyChildren(bpy.data.objects[targetParentName], showFrame, False)
+if showFrame > 0:
+    print("SHOW " + targetParentName + " DESCENDANTS AT FRAME:" + str(showFrame))
+    bpy.data.scenes['Root.DorothyLoris'].frame_set(showFrame)
+    addDispKeyChildren(bpy.data.objects[targetParentName], showFrame, False)
 
 print(PY_NAME + " END")
 
