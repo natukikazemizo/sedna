@@ -30,7 +30,9 @@ FRAME_PER_SECOND = 24
 FRAME_STEP = 2
 
 # parameters
-renderScopes = {RenderScope("Loris at Loris's Room", "Root.Loris", 1, 4, "Camera.Main.Loris", "//textures\\loris\\")}
+renderScopes = {RenderScope("Loris at Loris's Room", "Root.Loris", 1, 199, "Camera.Main.Loris", "//textures\\loris\\")
+,RenderScope("Loris WARP", "Root.DorothyLoris", 1, 265, "Camera.Main.Dorothy", "//..\renderResults\\")
+}
 
 # rendering renderScopes
 bpy.context.window.screen = bpy.data.screens['Render']
