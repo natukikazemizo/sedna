@@ -32,6 +32,11 @@ FRAME_STEP = 2
 # parameters
 renderScopes = {RenderScope("Loris at Loris's Room", "Root.Loris", 1, 199, "Camera.Main.Loris", "//textures\\loris\\")
 ,RenderScope("Loris WARP", "Root.DorothyLoris", 1, 265, "Camera.Main.Dorothy", "//..\renderResults\\")
+,RenderScope("GetUp Dorothy", "Root.DorothyLoris", 280, 324, "Camera.Main.Dorothy", "//..\renderResults\\")
+,RenderScope("Swing Dorothy Shoulder", "Root.DorothyLoris", 340, 388, "Camera.Main.Dorothy", "//..\renderResults\\")
+,RenderScope("Pull Dorothy Cheek", "Root.DorothyLoris", 390, 430, "Camera.Main.Dorothy", "//..\renderResults\\")
+,RenderScope("Loris Think", "Root.DorothyLoris", 430,580 , "Camera.Main.Dorothy", "//..\renderResults\\")
+,RenderScope("Pumping", "Root.DorothyLoris", 590, , "Camera.Main.Dorothy", "//..\renderResults\\")
 }
 
 # rendering renderScopes
