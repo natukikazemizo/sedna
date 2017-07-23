@@ -36,7 +36,10 @@ renderScopes = {RenderScope("Loris at Loris's Room", "Root.Loris", 1, 199, "Came
 ,RenderScope("Swing Dorothy Shoulder", "Root.DorothyLoris", 340, 388, "Camera.Main.Dorothy", "//..\renderResults\\")
 ,RenderScope("Pull Dorothy Cheek", "Root.DorothyLoris", 390, 430, "Camera.Main.Dorothy", "//..\renderResults\\")
 ,RenderScope("Loris Think", "Root.DorothyLoris", 430,580 , "Camera.Main.Dorothy", "//..\renderResults\\")
-,RenderScope("Pumping", "Root.DorothyLoris", 590, , "Camera.Main.Dorothy", "//..\renderResults\\")
+,RenderScope("Sting", "Root.DorothyLoris", 590, 598, "Camera.Main.Dorothy", "//..\renderResults\\")
+,RenderScope("Pumping", "Root.DorothyLoris", 600, 740, "Camera.Main.Dorothy", "//..\renderResults\\")
+,RenderScope("Burst", "Root.DorothyLoris", 741, 1000, "Camera.Main.Dorothy", "//..\renderResults\\")
+,RenderScope("Burst", "Root.DorothyLoris", 1001, , "Camera.Main.Dorothy", "//..\renderResults\\")
 }
 
 # rendering renderScopes

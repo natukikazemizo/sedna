@@ -13,9 +13,9 @@ PY_NAME = "SET SHOW HIDE KEY FRAMES"
 print(PY_NAME + " START")
 
 # parameters
-targetParentName = "Dis_T"
-hideFrame = 1520
-showFrame = -1
+targetParentName = "Pos.Loris"
+hideFrame = -2
+showFrame = 1
 
 # Add Show or Hide Key Frame On Child Objects
 def addDispKeyChildren(obj, frame, hide):
