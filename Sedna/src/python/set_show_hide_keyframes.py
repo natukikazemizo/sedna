@@ -13,8 +13,8 @@ PY_NAME = "SET SHOW HIDE KEY FRAMES"
 print(PY_NAME + " START")
 
 # parameters
-targetParentName = "Pos.Loris"
-hideFrame = -2
+targetParentName = "Pump_T"
+hideFrame = 741
 showFrame = 1
 
 # Add Show or Hide Key Frame On Child Objects
