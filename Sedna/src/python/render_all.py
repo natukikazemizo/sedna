@@ -27,22 +27,22 @@ RESOLUTION_Y = 1080
 RESOLUTION_PERCENTAGE = 25
 FILE_FORMAT = 'PNG'
 FRAME_PER_SECOND = 24
-FRAME_STEP = 2
+FRAME_STEP = 1
 
 # parameters
 renderScopes = {RenderScope("Loris at Loris's Room", "Root.Loris", 1, 199, "Camera.Main.Loris", "//textures\\loris\\")
-,RenderScope("Loris WARP", "Root.DorothyLoris", 1, 265, "Camera.Main.Dorothy", "//..\renderResults\\")
-,RenderScope("GetUp Dorothy", "Root.DorothyLoris", 280, 324, "Camera.Main.Dorothy", "//..\renderResults\\")
-,RenderScope("Swing Dorothy Shoulder", "Root.DorothyLoris", 340, 388, "Camera.Main.Dorothy", "//..\renderResults\\")
-,RenderScope("Pull Dorothy Cheek", "Root.DorothyLoris", 390, 430, "Camera.Main.Dorothy", "//..\renderResults\\")
-,RenderScope("Loris Think", "Root.DorothyLoris", 430,580 , "Camera.Main.Dorothy", "//..\renderResults\\")
-,RenderScope("Sting", "Root.DorothyLoris", 590, 598, "Camera.Main.Dorothy", "//..\renderResults\\")
-,RenderScope("Pumping", "Root.DorothyLoris", 600, 740, "Camera.Main.Dorothy", "//..\renderResults\\")
-,RenderScope("Burst", "Root.DorothyLoris", 741, 1000, "Camera.Main.Dorothy", "//..\renderResults\\")
-,RenderScope("Loris Run", "Root.DorothyLoris", 1001, 1092, "Camera.Main.Dorothy", "//..\renderResults\\")
-,RenderScope("MoveCube-Ending", "Root.DorothyLoris", 1093, 1519, "Camera.Main.Dorothy", "//..\renderResults\\")
-,RenderScope("Intro", "Root.DorothyLoris", 1520, 1723, "Camera.Main.Dorothy.004", "//..\renderResults_004\\")
-,RenderScope("Intro", "Root.DorothyLoris", 1520, 2098, "Camera.Main.Dorothy", "//..\renderResults\\")
+,RenderScope("Intro_Sub", "Root.DorothyLoris", 1520, 1723, "Camera.Main.Dorothy.004", "//..\\renderResults_004\\")
+,RenderScope("Intro_Main", "Root.DorothyLoris", 1520, 2098, "Camera.Main.Dorothy", "//..\\renderResults\\")
+#,RenderScope("Loris WARP", "Root.DorothyLoris", 1, 265, "Camera.Main.Dorothy", "//..\\renderResults\\")
+#,RenderScope("GetUp Dorothy", "Root.DorothyLoris", 280, 324, "Camera.Main.Dorothy", "//..\\renderResults\\")
+#,RenderScope("Swing Dorothy Shoulder", "Root.DorothyLoris", 340, 388, "Camera.Main.Dorothy", "//..\r\enderResults\\")
+#,RenderScope("Pull Dorothy Cheek", "Root.DorothyLoris", 390, 430, "Camera.Main.Dorothy", "//..\\renderResults\\")
+#,RenderScope("Loris Think", "Root.DorothyLoris", 430,580 , "Camera.Main.Dorothy", "//..\\renderResults\\")
+#,RenderScope("Sting", "Root.DorothyLoris", 590, 598, "Camera.Main.Dorothy", "//..\\renderResults\\")
+#,RenderScope("Pumping", "Root.DorothyLoris", 600, 740, "Camera.Main.Dorothy", "//..\\renderResults\\")
+#,RenderScope("Burst", "Root.DorothyLoris", 741, 1000, "Camera.Main.Dorothy", "//..\\renderResults\\")
+#,RenderScope("Loris Run", "Root.DorothyLoris", 1001, 1092, "Camera.Main.Dorothy", "//..\\renderResults\\")
+#,RenderScope("MoveCube-Ending", "Root.DorothyLoris", 1093, 1519, "Camera.Main.Dorothy", "//..\\renderResults\\")
 }
 
 # rendering renderScopes
