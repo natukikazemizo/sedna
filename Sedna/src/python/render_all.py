@@ -59,13 +59,18 @@ renderScopes_0020 = {
  RenderScope("MoveTexture&Fix Skirt ", "Root.DorothyLoris", 1329, 1363, "Camera.Main.Dorothy", "//..\\renderResults\\")
 }
 
+renderScopes_0030 = {
+ RenderScope("Pump Start ", "Root.DorothyLoris", 601, 685, "Camera.Main.Dorothy", "//..\\renderResults\\")
+}
+
+
 # DEBUG MODE
 DEBUG = False
 
 # rendering renderScopes
 bpy.context.window.screen = bpy.data.screens['Render']
 
-for scope in renderScopes_0020:
+for scope in renderScopes_0030:
     print(scope.name + " RENDER START")
     bpy.context.screen.scene = bpy.data.scenes[scope.scene]
     bpy.context.scene.render.resolution_x = RESOLUTION_X
