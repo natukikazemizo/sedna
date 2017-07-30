@@ -36,8 +36,8 @@ for lr in LR_LIST:
         constraint.map_to_x_from = 'Z'
         constraint.map_to_z_from = 'X'
 
-        constraint.to_min_z_rot = -math.pi * 2 / 3
-        constraint.to_max_z_rot = math.pi * 2 / 3
+        constraint.to_min_z_rot = math.pi * 2 / 3
+        constraint.to_max_z_rot = -math.pi * 2 / 3
 #        if lr == "R":
 #            constraint.to_min_z_rot = math.pi * 2 / 3
 #            constraint.to_max_z_rot = -math.pi * 2 / 3
