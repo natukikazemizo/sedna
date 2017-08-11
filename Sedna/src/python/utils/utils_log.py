@@ -3,11 +3,13 @@
 # Log
 #
 # 2017.07.17 Natukikazemizo
-
+import datetime
 
 def start(pyName):
-    print(pyName + " START")
+    print(datetime.datetime.today().\
+        strftime("%Y/%m/%d %H:%M:%S.%f ") + pyName + " START")
 
 def end(pyName):
-    print(pyName + " END")
+    print(datetime.datetime.today().\
+        strftime("%Y/%m/%d %H:%M:%S.%f ") + pyName + " END")
 
