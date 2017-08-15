@@ -70,8 +70,22 @@ class TF_Prm():
 pi = math.pi
 
 bone_transformations = [
- TF_Prm("HOGE",         "BigToe_T.L", 0, 0.01, 0, 0, 0, 0.01, 'X', 'Y', 'Z', 'ROTATION', 0, pi/4, 0, 0, pi/4, 0, "LOCAL", "LOCAL")
-,TF_Prm("BigToe.L.002", "BigToe_T.L", 0, 0.01, 0, 0, 0, 0.01, 'Z', 'Y', 'X', 'ROTATION', 0, pi/4, 0, 0, 0, pi/4, "LOCAL", "LOCAL")
+ TF_Prm("Invarid_BoneNameTest", "BigToe_T.L",   0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0, 0, 0, pi/4 , "LOCAL", "LOCAL")
+
+# Legs
+,TF_Prm("Knee.L.001",           "Knee_T.L",      0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, pi/4, 0, 0, 0, -pi/4 , "LOCAL", "LOCAL")
+
+
+# Foot
+,TF_Prm("Shanks.L.005",         "Foot_P.L",      0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, pi/4, 0, 0, 0, -pi/4 , "LOCAL", "LOCAL")
+,TF_Prm("Shanks.L.006",         "Heel_T.L.001",  0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, 0,     0, 0, 0, -pi/4 , "LOCAL", "LOCAL")
+,TF_Prm("Foot.L",               "Heel_T.L.001",  0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, pi/4 , 0, 0, 0, -pi/4 , "LOCAL", "LOCAL")
+
+# Toe
+,TF_Prm("BigToe.L",             "Toe_T.L",      0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4 , 0, 0, 0, pi/4 , "LOCAL", "LOCAL")
+,TF_Prm("BigToe.L.001",         "BigToe_T.L",   0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4 , 0, 0, 0, pi/4 , "LOCAL", "LOCAL")
+,TF_Prm("BigToe.L.002",         "BigToe_T.L",   0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4 , 0, 0, 0, pi/4 , "LOCAL", "LOCAL")
+
 #,TF_PRM()
 ]
 
