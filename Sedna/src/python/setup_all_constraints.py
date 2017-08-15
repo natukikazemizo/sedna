@@ -42,7 +42,7 @@ class TF_Prm():
     def __init__(self, bone_name, subtarget_bone_name, from_min_x, from_max_x, \
             from_min_y, from_max_y, from_min_z, from_max_z, \
             map_to_x_from, map_to_y_from, map_to_z_from, map_to, \
-            to_min_x_rot, to_max_x_rot, to_min_y_rot, to_max_y_rot, to_min_z_rot, to_max_z_rot, \
+            to_min_x, to_max_x, to_min_y, to_max_y, to_min_z, to_max_z, \
             target_space, owner_space):
         self.bone_name = bone_name
         self.subtarget_bone_name = subtarget_bone_name
@@ -56,12 +56,12 @@ class TF_Prm():
         self.map_to_y_from = map_to_y_from
         self.map_to_z_from = map_to_z_from
         self.map_to = map_to
-        self.to_min_x_rot = to_min_x_rot
-        self.to_max_x_rot = to_max_x_rot
-        self.to_min_y_rot = to_min_y_rot
-        self.to_max_y_rot = to_max_y_rot
-        self.to_min_z_rot = to_min_z_rot
-        self.to_max_z_rot = to_max_z_rot
+        self.to_min_x = to_min_x
+        self.to_max_x = to_max_x
+        self.to_min_y = to_min_y
+        self.to_max_y = to_max_y
+        self.to_min_z = to_min_z
+        self.to_max_z = to_max_z
         self.target_space = target_space
         self.owner_space = owner_space
 
@@ -70,21 +70,33 @@ class TF_Prm():
 pi = math.pi
 
 bone_transformations = [
- TF_Prm("Invarid_BoneNameTest", "BigToe_T.L",   0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0, 0, 0, pi/4 , "LOCAL", "LOCAL")
+ TF_Prm("Invarid_BoneNameTest", "BigToe_T.L",     0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
+
+# Body
+,TF_Prm("Spine.Root.001",      "Rib_Size_T",      0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE',    1,   0.5,  1,  0.5,   1,   0.5, "LOCAL", "LOCAL")
+,TF_Prm("Spine.Root.002",      "Rib_Size_T",      0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'LOCATION', 0,     0,  0,  0.2,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Spine.Root",          "Rib_T",           0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Waist",               "Waist_T",         0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Waist_Rot",           "Waist_P",         0, 0.01, 0,    0, 0, 0, 'Y', 'X', 'Y', 'ROTATION', 0,     0,  0, pi/4,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Pelvis",              "Pelvis_T.001",    0, 0.01, 0,    0, 0, 0, 'Y', 'X', 'Y', 'ROTATION', 0,     0,  0,-pi/4,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Pelvis.001",          "Pelvis_T",        0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
 
 # Legs
-,TF_Prm("Knee.L.001",           "Knee_T.L",      0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, pi/4, 0, 0, 0, -pi/4 , "LOCAL", "LOCAL")
-
+,TF_Prm("ThighHead.L",          "ThighHead_T.L",  0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Thigh.L",              "Thigh_T.L",      0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Thigh.L.001",          "Thigh_Size_T.L", 0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE',    1,   1.5,  1,  0.1,   1,   1.5, "LOCAL", "LOCAL")
+,TF_Prm("Thigh.L.002",          "Thigh_Size_T.L", 0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'LOCATION', 0,     0,  0, -0.2,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Knee.L.001",           "Knee_T.L",       0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
 
 # Foot
-,TF_Prm("Shanks.L.005",         "Foot_P.L",      0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, pi/4, 0, 0, 0, -pi/4 , "LOCAL", "LOCAL")
-,TF_Prm("Shanks.L.006",         "Heel_T.L.001",  0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, 0,     0, 0, 0, -pi/4 , "LOCAL", "LOCAL")
-,TF_Prm("Foot.L",               "Heel_T.L.001",  0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, pi/4 , 0, 0, 0, -pi/4 , "LOCAL", "LOCAL")
+,TF_Prm("Shanks.L.005",         "Foot_P.L",       0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Shanks.L.006",         "Heel_T.L.001",   0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,     0,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Foot.L",               "Heel_T.L.001",   0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
 
 # Toe
-,TF_Prm("BigToe.L",             "Toe_T.L",      0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4 , 0, 0, 0, pi/4 , "LOCAL", "LOCAL")
-,TF_Prm("BigToe.L.001",         "BigToe_T.L",   0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4 , 0, 0, 0, pi/4 , "LOCAL", "LOCAL")
-,TF_Prm("BigToe.L.002",         "BigToe_T.L",   0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4 , 0, 0, 0, pi/4 , "LOCAL", "LOCAL")
+,TF_Prm("BigToe.L",             "Toe_T.L",        0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
+,TF_Prm("BigToe.L.001",         "BigToe_T.L",     0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
+,TF_Prm("BigToe.L.002",         "BigToe_T.L",     0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
 
 #,TF_PRM()
 ]
@@ -120,12 +132,29 @@ def setup_transform(bone_name, subtarget_bone_name, bone_transform):
     constraint.map_to_y_from = bone_transform.map_to_y_from
     constraint.map_to_z_from = bone_transform.map_to_z_from
     constraint.map_to = bone_transform.map_to
-    constraint.to_min_x_rot = bone_transform.to_min_x_rot
-    constraint.to_max_x_rot = bone_transform.to_max_x_rot
-    constraint.to_min_y_rot = bone_transform.to_min_y_rot
-    constraint.to_max_y_rot = bone_transform.to_max_y_rot
-    constraint.to_min_z_rot = bone_transform.to_min_z_rot
-    constraint.to_max_z_rot = bone_transform.to_max_z_rot
+    if constraint.map_to == "LOCATION":
+        constraint.to_min_x = bone_transform.to_min_x
+        constraint.to_max_x = bone_transform.to_max_x
+        constraint.to_min_y = bone_transform.to_min_y
+        constraint.to_max_y = bone_transform.to_max_y
+        constraint.to_min_z = bone_transform.to_min_z
+        constraint.to_max_z = bone_transform.to_max_z
+    elif constraint.map_to == "ROTATION":
+        constraint.to_min_x_rot = bone_transform.to_min_x
+        constraint.to_max_x_rot = bone_transform.to_max_x
+        constraint.to_min_y_rot = bone_transform.to_min_y
+        constraint.to_max_y_rot = bone_transform.to_max_y
+        constraint.to_min_z_rot = bone_transform.to_min_z
+        constraint.to_max_z_rot = bone_transform.to_max_z
+    else:
+        # map_to:SCALE
+        constraint.to_min_x_scale = bone_transform.to_min_x
+        constraint.to_max_x_scale = bone_transform.to_max_x
+        constraint.to_min_y_scale = bone_transform.to_min_y
+        constraint.to_max_y_scale = bone_transform.to_max_y
+        constraint.to_min_z_scale = bone_transform.to_min_z
+        constraint.to_max_z_scale = bone_transform.to_max_z
+
     constraint.target_space = bone_transform.target_space
     constraint.owner_space = bone_transform.owner_space
 
