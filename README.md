@@ -1,6 +1,6 @@
 # Sedna セドナ
 ## beta-version Classic-Animation-Like-3DCG development envilonment
-## β版 古典的アニメ風動画作成環境  
+## β版 古典的アニメ風動画開発環境  
 
 ## 必要環境  
 * Blender Version 2.78 以降
