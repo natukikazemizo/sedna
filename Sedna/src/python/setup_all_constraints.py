@@ -25,8 +25,6 @@ DELETE_IK = False
 
 ARMATURE_NAME = "Loris.Armature"
 
-TRANSFORMATION_NAME = "Rig Ctrl"
-
 EXTRAPOLATE = True
 
 # init logger
@@ -39,11 +37,12 @@ CONSTRAINT_TYPE = "TRANSFORM"
 # class definition
 class TF_Prm():
     """Parameters of Bone Constraints of Transformation"""
-    def __init__(self, bone_name, subtarget_bone_name, from_min_x, from_max_x, \
+    def __init__(self, constraint_name, bone_name, subtarget_bone_name, from_min_x, from_max_x, \
             from_min_y, from_max_y, from_min_z, from_max_z, \
             map_to_x_from, map_to_y_from, map_to_z_from, map_to, \
             to_min_x, to_max_x, to_min_y, to_max_y, to_min_z, to_max_z, \
             target_space, owner_space):
+        self.constraint_name = constraint_name
         self.bone_name = bone_name
         self.subtarget_bone_name = subtarget_bone_name
         self.from_min_x = from_min_x
@@ -70,35 +69,57 @@ class TF_Prm():
 pi = math.pi
 
 bone_transformations = [
- TF_Prm("Invarid_BoneNameTest", "BigToe_T.L",     0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
+ TF_Prm("Rig Ctrl",     "Invarid_BoneNameTest", "BigToe_T.L",         0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
+
+#Head
+,TF_Prm("Rig Ctrl",     "Head.001",             "Head_Size_T",        0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'LOCATION', 0,     0,  0,  0.01,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl.001", "Head.001",             "Head_Size_T",        0,    0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE',    1,   0.9,  1,   0.9,   1,   0.9, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Head",                 "Head_T",             0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,     0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl.001", "Head",                 "Head_Size_T",        0,    0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE',    1,   0.9,  1,   0.9,   1,   0.9, "LOCAL", "LOCAL")
+
+#Neck
+,TF_Prm("Rig Ctrl",     "Neck.002",             "Neck_T",             0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,     0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl.001", "Neck.002",             "Neck_P",             0, 0.01, 0,    0, 0, 0, 'Y', 'X', 'Y', 'ROTATION', 0,     0,  0,  pi/4,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Neck",                 "Neck_Size_T",        0,    0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE',    1,   0.5,  1,     2,   1,   0.5, "LOCAL", "LOCAL")
+
+#Arms
+,TF_Prm("Rig Ctrl",     "Shoulder.L",           "Shoulder_T.L",       0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,     0,   0,  pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "UpperArm.L",           "Elbo_T.L",           0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,     0,   0,  pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "UpperArm.L.003",       "Arm_Size_T.L",       0,    0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE',    1,   0.5,  1,     1,   1,   0.5, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl.001", "UpperArm.L.003",       "Arm_Size_T.L",       0,    0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'LOCATION', 0,     0,  0,   0.2,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Forearm.L.001",        "Hand_P.L",           0,    0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'ROTATION', 0,     0,  0,  pi/4,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Hand.L",               "Hand_P.L",           0,    0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'ROTATION', 0,     0,  0, -pi/4,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Forearm.R.001",        "Hand_P.R",           0,    0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'ROTATION', 0,     0,  0, -pi/4,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Hand.R",               "Hand_P.R",           0,    0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'ROTATION', 0,     0,  0,  pi/4,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl.001", "Hand.L",               "Hand_T.L",           0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,     0,   0,  pi/4, "LOCAL", "LOCAL")
+#Thumb's Y axis rotatin is difficult
+#,TF_Prm("Rig Ctrl",     "Thumb.L.001",          "Thumb.Ctrl_T.L.001", 0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'X', 'ROTATION', 0, -pi/4,  0, -pi/4,   0, -pi/4, "LOCAL", "LOCAL")
 
 # Body
-,TF_Prm("Spine.Root.001",      "Rib_Size_T",      0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE',    1,   0.5,  1,  0.5,   1,   0.5, "LOCAL", "LOCAL")
-,TF_Prm("Spine.Root.002",      "Rib_Size_T",      0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'LOCATION', 0,     0,  0,  0.2,   0,     0, "LOCAL", "LOCAL")
-,TF_Prm("Spine.Root",          "Rib_T",           0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
-,TF_Prm("Waist",               "Waist_T",         0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
-,TF_Prm("Waist_Rot",           "Waist_P",         0, 0.01, 0,    0, 0, 0, 'Y', 'X', 'Y', 'ROTATION', 0,     0,  0, pi/4,   0,     0, "LOCAL", "LOCAL")
-,TF_Prm("Pelvis",              "Pelvis_T.001",    0, 0.01, 0,    0, 0, 0, 'Y', 'X', 'Y', 'ROTATION', 0,     0,  0,-pi/4,   0,     0, "LOCAL", "LOCAL")
-,TF_Prm("Pelvis.001",          "Pelvis_T",        0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Spine.Root.001",       "Rib_Size_T",         0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE',    1,   0.5,  1,  0.5,   1,   0.5, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl.001", "Spine.Root.001",       "Rib_Size_T",         0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'LOCATION', 0,     0,  0,  0.2,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Spine.Root",           "Rib_T",              0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Waist",                "Waist_T",            0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Waist",                "Waist_P",            0, 0.01, 0,    0, 0, 0, 'Y', 'X', 'Y', 'ROTATION', 0,     0,  0, pi/4,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl.001", "Pelvis",               "Pelvis_T.001",       0, 0.01, 0,    0, 0, 0, 'Y', 'X', 'Y', 'ROTATION', 0,     0,  0,-pi/4,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Pelvis",               "Pelvis_T",           0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
 
 # Legs
-,TF_Prm("ThighHead.L",          "ThighHead_T.L",  0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
-,TF_Prm("Thigh.L",              "Thigh_T.L",      0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
-,TF_Prm("Thigh.L.001",          "Thigh_Size_T.L", 0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE',    1,   1.5,  1,  0.1,   1,   1.5, "LOCAL", "LOCAL")
-,TF_Prm("Thigh.L.002",          "Thigh_Size_T.L", 0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'LOCATION', 0,     0,  0, -0.2,   0,     0, "LOCAL", "LOCAL")
-,TF_Prm("Knee.L.001",           "Knee_T.L",       0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "ThighHead.L",          "ThighHead_T.L",      0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Thigh.L",              "Thigh_T.L",          0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Thigh.L.001",          "Thigh_Size_T.L",     0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE',    1,   0.5,  1,    2,   1,   0.5, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Thigh.L.002",          "Thigh_Size_T.L",     0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'LOCATION', 0,     0,  0,  0.2,   0,     0, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Knee.L.001",           "Knee_T.L",           0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
 
 # Foot
-,TF_Prm("Shanks.L.005",         "Foot_P.L",       0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
-,TF_Prm("Shanks.L.006",         "Heel_T.L.001",   0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,     0,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
-,TF_Prm("Foot.L",               "Heel_T.L.001",   0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Shanks.L.005",         "Foot_P.L",           0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Shanks.L.006",         "Heel_T.L.001",       0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,     0,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "Foot.L",               "Heel_T.L.001",       0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0,  pi/4,  0,    0,   0, -pi/4, "LOCAL", "LOCAL")
 
 # Toe
-,TF_Prm("BigToe.L",             "Toe_T.L",        0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
-,TF_Prm("BigToe.L.001",         "BigToe_T.L",     0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
-,TF_Prm("BigToe.L.002",         "BigToe_T.L",     0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
-
-#,TF_PRM()
+,TF_Prm("Rig Ctrl",     "BigToe.L",             "Toe_T.L",            0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "BigToe.L.001",         "BigToe_T.L",         0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
+,TF_Prm("Rig Ctrl",     "BigToe.L.002",         "BigToe_T.L",         0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
 ]
 
 
@@ -112,11 +133,11 @@ def setup_transform(bone_name, subtarget_bone_name, bone_transform):
         return
     
     bone = bpy.context.object.pose.bones[bone_name]
-    if bone.constraints.find(TRANSFORMATION_NAME) == -1:
+    if bone.constraints.find(bone_transform.constraint_name) == -1:
         newConstraint = bone.constraints.new(type=CONSTRAINT_TYPE)
-        newConstraint.name = TRANSFORMATION_NAME
+        newConstraint.name = bone_transform.constraint_name
         
-    constraint = bone.constraints[TRANSFORMATION_NAME]
+    constraint = bone.constraints[bone_transform.constraint_name]
     constraint.target = bpy.data.objects[ARMATURE_NAME]
     constraint.subtarget = subtarget_bone_name
     constraint.use_motion_extrapolate = EXTRAPOLATE
