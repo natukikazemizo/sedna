@@ -23,7 +23,8 @@ importlib.reload(utils_log)
 # parameters
 DELETE_IK = False
 
-ARMATURE_NAME = "Loris.Armature"
+#ARMATURE_NAME = "Loris.Armature"
+ARMATURE_NAME = "Dorothy.Armature"
 
 EXTRAPOLATE = True
 
@@ -69,9 +70,13 @@ class TF_Prm():
 pi = math.pi
 
 bone_transformations = [
+# TEST
  TF_Prm("Rig Ctrl",     "Invarid_BoneNameTest", "BigToe_T.L",         0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,    0,   0,  pi/4, "LOCAL", "LOCAL")
 
-#Head
+# Face
+
+
+# Head
 ,TF_Prm("Rig Ctrl",     "Head.001",             "Head_Size_T",        0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'LOCATION', 0,     0,  0,  0.01,   0,     0, "LOCAL", "LOCAL")
 ,TF_Prm("Rig Ctrl.001", "Head.001",             "Head_Size_T",        0,    0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE',    1,   0.9,  1,   0.9,   1,   0.9, "LOCAL", "LOCAL")
 ,TF_Prm("Rig Ctrl",     "Head",                 "Head_T",             0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi/4,  0,     0,   0, -pi/4, "LOCAL", "LOCAL")
