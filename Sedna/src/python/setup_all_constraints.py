@@ -74,10 +74,9 @@ bone_transformations = [
  TF_Prm("Rig Ctrl", "Invarid_BoneNameTest", "BigToe_T.L", 0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi / 4, 0, 0, 0, pi / 4, "LOCAL", "LOCAL")
 
 # EyeBow
-, TF_Prm("Rig Ctrl", "Eyebow_Head_T.L", "Eyebow_Head_T.L.001", 0, 0.01, 0, 0.01, 0, 0, 'Z', 'X', 'Y', 'LOCATION', 0, 0, 0, -0.02, 0, -0.02, "LOCAL", "LOCAL")
-, TF_Prm("Rig Ctrl", "Eyebow_Head_T.L", "Eyebow_Head_T.L.001", 0, 0.01, 0, 0.01, 0, 0, 'Z', 'X', 'Y', 'LOCATION', 0, 0, 0, 0.02, 0, -0.02, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl", "Eyebow_Head_T.L", "Eyebow_Head_T.L.001", 0, 0, 0, 0.01, 0, 0.01, 'X', 'Z', 'Y', 'LOCATION', 0, 0, 0, -0.02, 0, -0.02, "LOCAL", "LOCAL")
 , TF_Prm("Rig Ctrl", "Eyebow_Root_T.L", "Eyebow_Root_T.L.001", 0, 0, 0, 0.01, 0, 0, 'X', 'X', 'Y', 'LOCATION', 0, 0, 0, 0, 0, -0.02, "LOCAL", "LOCAL")
-, TF_Prm("Rig Ctrl", "Eyebow_Tail_T.L", "Eyebow_Tail_T.L.001", 0, 0.01, 0, 0.01, 0, 0, 'Z', 'X', 'Y', 'LOCATION', 0, 0, 0, -0.02, 0, -0.02, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl", "Eyebow_Tail_T.L", "Eyebow_Tail_T.L.001", 0, 0, 0, 0.01, 0, 0.01, 'X', 'Z', 'Y', 'LOCATION', 0, 0, 0, -0.02, 0, -0.02, "LOCAL", "LOCAL")
 
 # Eyes
 , TF_Prm("Rig Ctrl", "UpperEyelid.L", "UpperEyelid_T.L", 0, 0, 0, 0.01, 0, 0, 'Y', 'X', 'X', 'ROTATION', 0, -pi / 4, 0, 0, 0, 0, "LOCAL", "LOCAL")
@@ -88,11 +87,21 @@ bone_transformations = [
 
 # Nose
 , TF_Prm("Rig Ctrl", "Nose", "Nose_XY_T", 0, 0.01, 0, 0.01, 0, 0, 'X', 'Y', 'Z', 'LOCATION', 0, 0.02, 0, 0.02, 0, 0, "LOCAL", "LOCAL")
-, TF_Prm("Rig Ctrl.001", "Nose", "Nose_Z_T", 0, 0.01, 0, 0, 0, 0, 'Z', 'Z', 'X', 'LOCATION', 0, 0, 0, 0, 0, -0.02, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl.001", "Nose", "Nose_Z_T", 0, 0, 0, 0.01, 0, 0, 'Z', 'Z', 'Y', 'LOCATION', 0, 0, 0, 0, 0, 0.02, "LOCAL", "LOCAL")
 
 # Mouth
+, TF_Prm("Rig Ctrl", "Cheek.L", "Cheek_T.XZ.L", 0, 0.01, 0, 0.01, 0, 0, 'X', 'Z', 'Y', 'LOCATION', 0, 0.01, 0, 0, 0, 0.01, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl.001", "Cheek.L", "Cheek_T.Y.L", 0, 0.01, 0, 0, 0, 0.01, 'X', 'Z', 'X', 'LOCATION', 0, 0, 0, 0.01, 0, 0, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl", "UpperMouth_T", "UpperMouth_T.YZ", 0, 0.01, 0, 0.01, 0, 0, 'Z', 'X', 'Y', 'LOCATION', 0, 0, 0, 0.01, 0, 0.01, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl", "UpperMouth_T.L", "UpperMouth_T.XZ.L", 0, 0.01, 0, 0.01, 0, 0, 'X', 'Z', 'Y', 'LOCATION', 0, 0.01, 0, 0, 0, 0.01, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl.001", "UpperMouth_T.L", "UpperMouth_T.Y.L", 0, 0.01, 0, 0, 0, 0.01, 'X', 'Z', 'X', 'LOCATION', 0, 0, 0, 0.01, 0, 0, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl", "SideMouth_T.L", "SideMouth_T.XZ.L", 0, 0.01, 0, 0.01, 0, 0, 'X', 'Z', 'Y', 'LOCATION', 0, 0.01, 0, 0, 0, 0.01, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl.001", "SideMouth_T.L", "SideMouth_T.Y.L", 0, 0.01, 0, 0, 0, 0.01, 'X', 'Z', 'X', 'LOCATION', 0, 0, 0, 0.01, 0, 0, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl", "LowerMouth_T", "LowerMouth_T.YZ", 0, 0.01, 0, 0.01, 0, 0, 'Z', 'X', 'Y', 'LOCATION', 0, 0, 0, 0.01, 0, 0.01, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl", "LowerMouth_T.L", "LowerMouth_T.XZ.L", 0, 0.01, 0, 0.01, 0, 0, 'X', 'Z', 'Y', 'LOCATION', 0, 0.01, 0, 0, 0, 0.01, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl.001", "LowerMouth_T.L", "LowerMouth_T.Y.L", 0, 0.01, 0, 0, 0, 0.01, 'X', 'Z', 'X', 'LOCATION', 0, 0, 0, 0.01, 0, 0, "LOCAL", "LOCAL")
 , TF_Prm("Rig Ctrl", "Tooth", "Jaw_T", 0, 0, 0, 0.01, 0, 0, 'Y', 'Z', 'Z', 'ROTATION', 0, -pi / 16, 0, 0, 0, 0, "LOCAL", "LOCAL")
-
+, TF_Prm("Rig Ctrl", "JawStretch.001", "JawStretch_T", 0, 0, 0, 0.01, 0, 0, 'Z', 'Y', 'Z', 'LOCATION', 0, 0, 0, -0.02, 0, 0, "LOCAL", "LOCAL")
 
 # Head
 , TF_Prm("Rig Ctrl", "Head.001", "Head_Size_T", 0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'LOCATION', 0, 0, 0, 0.01, 0, 0, "LOCAL", "LOCAL")
@@ -106,6 +115,8 @@ bone_transformations = [
 , TF_Prm("Rig Ctrl", "Neck", "Neck_Size_T", 0, 0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE', 1, 0.5, 1, 2, 1, 0.5, "LOCAL", "LOCAL")
 
 # Arms
+, TF_Prm("Rig Ctrl", "Shoulder_T.L.001", "Shoulder_T.001.XZ.L", 0, 0.01, 0, 0.01, 0, 0, 'X', 'Z', 'Y', 'LOCATION', 0, 0.02, 0, 0, 0, 0.02, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl.001", "Shoulder_T.L.001", "Shoulder_T.001.Y.L", 0, 0.01, 0, 0, 0, 0.01, 'X', 'Z', 'X', 'LOCATION', 0, 0, 0, 0.02, 0, 0, "LOCAL", "LOCAL")
 , TF_Prm("Rig Ctrl", "Shoulder.L", "Shoulder_T.L", 0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, pi / 4, 0, 0, 0, pi / 4, "LOCAL", "LOCAL")
 , TF_Prm("Rig Ctrl", "UpperArm.L", "Elbo_T.L", 0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, pi / 4, 0, 0, 0, pi / 4, "LOCAL", "LOCAL")
 , TF_Prm("Rig Ctrl", "UpperArm.L.003", "Arm_Size_T.L", 0, 0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE', 1, 0.5, 1, 1, 1, 0.5, "LOCAL", "LOCAL")
@@ -115,8 +126,8 @@ bone_transformations = [
 , TF_Prm("Rig Ctrl", "Forearm.R.001", "Hand_P.R", 0, 0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'ROTATION', 0, 0, 0, -pi / 4, 0, 0, "LOCAL", "LOCAL")
 , TF_Prm("Rig Ctrl", "Hand.R", "Hand_P.R", 0, 0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'ROTATION', 0, 0, 0, pi / 4, 0, 0, "LOCAL", "LOCAL")
 , TF_Prm("Rig Ctrl.001", "Hand.L", "Hand_T.L", 0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, pi / 4, 0, 0, 0, pi / 4, "LOCAL", "LOCAL")
-# Thumb's Y axis rotatin is difficult
-# ,TF_Prm("Rig Ctrl",     "Thumb.L.001",          "Thumb.Ctrl_T.L.001", 0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'X', 'ROTATION', 0, -pi/4,  0, -pi/4,   0, -pi/4, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl", "Thumb_T.L.001", "Thumb_T.001.XZ.L", 0, 0.01, 0, 0.01, 0, 0, 'X', 'Z', 'Y', 'LOCATION', 0, 0.02, 0, 0, 0, 0.02, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl.001", "Thumb_T.L.001", "Thumb_T.001.Y.L", 0, 0, 0, 0, 0, 0.01, 'X', 'Z', 'X', 'LOCATION', 0, 0, 0, 0.02, 0, 0, "LOCAL", "LOCAL")
 
 # Body
 , TF_Prm("Rig Ctrl", "Spine.Root.001", "Rib_Size_T", 0, 0.01, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE', 1, 0.5, 1, 0.5, 1, 0.5, "LOCAL", "LOCAL")
