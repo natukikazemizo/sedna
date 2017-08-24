@@ -23,8 +23,8 @@ importlib.reload(utils_log)
 # parameters
 DELETE_IK = False
 
-ARMATURE_NAME = "Loris.Armature"
-#ARMATURE_NAME = "Dorothy.Armature"
+#ARMATURE_NAME = "Loris.Armature"
+ARMATURE_NAME = "Dorothy.Armature"
 
 EXTRAPOLATE = True
 
