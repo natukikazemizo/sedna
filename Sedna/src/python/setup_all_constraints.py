@@ -23,8 +23,8 @@ importlib.reload(utils_log)
 # parameters
 DELETE_IK = False
 
-#ARMATURE_NAME = "Loris.Armature"
-ARMATURE_NAME = "Dorothy.Armature"
+ARMATURE_NAME = "Loris.Armature"
+#ARMATURE_NAME = "Dorothy.Armature"
 
 EXTRAPOLATE = True
 
@@ -113,6 +113,7 @@ bone_transformations = [
 , TF_Prm("Rig Ctrl", "Neck.002", "Neck_T", 0, 0.01, 0, 0.01, 0, 0, 'Y', 'Z', 'X', 'ROTATION', 0, -pi / 4, 0, 0, 0, -pi / 4, "LOCAL", "LOCAL")
 , TF_Prm("Rig Ctrl.001", "Neck.002", "Neck_P", 0, 0.01, 0, 0, 0, 0, 'Y', 'X', 'Y', 'ROTATION', 0, 0, 0, pi / 4, 0, 0, "LOCAL", "LOCAL")
 , TF_Prm("Rig Ctrl", "Neck", "Neck_Size_T", 0, 0, 0, 0.01, 0, 0, 'Y', 'Y', 'Y', 'SCALE', 1, 0.5, 1, 2, 1, 0.5, "LOCAL", "LOCAL")
+, TF_Prm("Rig Ctrl.001", "Neck", "Neck_P", 0, 0.01, 0, 0, 0, 0, 'Y', 'X', 'Y', 'ROTATION', 0, 0, 0, pi / 4, 0, 0, "LOCAL", "LOCAL")
 
 # Arms
 , TF_Prm("Rig Ctrl", "Shoulder_T.L.001", "Shoulder_T.001.XZ.L", 0, 0.01, 0, 0.01, 0, 0, 'X', 'Z', 'Y', 'LOCATION', 0, 0.02, 0, 0, 0, 0.02, "LOCAL", "LOCAL")
