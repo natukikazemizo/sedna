@@ -32,7 +32,7 @@
 携帯端末からissueを記述する  
 ↓  
 自宅ＰＣよりissueにmilestoneとLable追記する OR wikiにまとめなおす  
-（本作業はissue記述後一週間以内に実施） 
+（本作業はissue記述後一週間以内に実施）   
 ↓   
 issueはmilestoneに従って対策されていく       
 ↓     
