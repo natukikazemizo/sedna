@@ -27,6 +27,17 @@
 [ドロシーの開発環境#0010 youtube版](https://youtu.be/j0UhxwEl4is)  
 [上記の動画ファイルに対応した.blendファイルはこちら](https://bowlroll.net/file/134556)
 
+## issueの運用フロー
+2017.09.06 Version
+携帯端末からissueを記述する  
+↓  
+自宅ＰＣよりissueにmilestoneとLable追記する OR wikiにまとめなおす  
+（本作業はissue記述後一週間以内に実施） 
+↓   
+issueはmilestoneに従って対策されていく       
+↓     
+実装結果は，wikiもしくは，公開しているzipファイルに反映される   
+
 ## License ライセンス
 MIT
 
