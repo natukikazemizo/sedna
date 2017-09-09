@@ -12,10 +12,12 @@ import os
 
 import utils_converter
 import utils_log
+import utils_io_csv
 
 #reload all user pythons
 importlib.reload(utils_converter)
 importlib.reload(utils_log)
+importlib.reload(utils_io_csv)
 
 #constants
 PY_NAME = "utils_0000_debug_all"
@@ -47,6 +49,24 @@ print_arg_and_result(utils_converter.cnv_l_2_r, STRING_DOT_L_DOT)
 print_arg_and_result(utils_converter.cnv_l_2_r, STRING_DOT_L_UNDER_BAR)
 print_arg_and_result(utils_converter.cnv_l_2_r, STRING_DOT_L_END)
 print_arg_and_result(utils_converter.cnv_l_2_r, STRING_DOT_L_NAME)
+
+# debug utils_io_csv
+
+data =[["A","B","C"],
+       [1,2,3],
+       [4,5,6],
+       ["Seven",8,9]]
+       
+print("WRITE CSV START")
+utils_io_csv.write("debug_utils_io_csv.csv", data)
+print("READ START")
+header, data = utils_io_csv.read("debug_utils_io_csv.csv")
+print("HEADER:")
+print(header)
+print("DATA:")
+print(data)
+
+print("END")
 
 
 # debug utils_log
