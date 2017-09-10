@@ -4,6 +4,10 @@
 #
 # 2017.08.06 Natukikazemizo
 
+# !!!! WARNING NEEDS BONE BLUSH UP
+# !!!! NEEDS  .blend -> CSV EDIT =-> .blend  Roop
+
+
 import bpy
 import math
 import os

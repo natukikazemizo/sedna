@@ -8,10 +8,11 @@
 import bpy
 import csv
 
-# Def root path
 root_path = bpy.path.abspath("//") + "data/"
+"""Def root path"""
 
 def write(file_name, data, enc = 'utf-8'):
+    """write to csv"""
     try:
         # write with UTF-8
         if enc == 'utf-8':
