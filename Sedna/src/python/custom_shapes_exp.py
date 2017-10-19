@@ -27,7 +27,7 @@ for x in bpy.context.selected_pose_bones:
         print(x.name)
         data_row = []
         data_row.append(x.name)
-        data_row.append(x.custom_shape.name)        
+        data_row.append(x.custom_shape.name)
         bone_names.append(data_row)
 
 utils_io_csv.write(WORK_FILE_NAME, bone_names)
