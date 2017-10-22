@@ -18,19 +18,19 @@ logger = utils_log.Util_Log(os.path.basename(__file__))
 
 logger.start()
 
-bone_names = []
-header = ["bone_name", "custom_shape"]
-bone_names.append(header)
+header, data = utils_io_csv.read(WORK_FILE_NAME)
 
-for x in bpy.context.selected_pose_bones:
-    if x.custom_shape != None:
-        print(x.name)
-        data_row = []
-        data_row.append(x.name)
-        data_row.append(x.custom_shape.name)        
-        bone_names.append(data_row)
-
-utils_io_csv.write(WORK_FILE_NAME, bone_names)
+for row in data:
+    if bpy.context.object.pose.bones.find(row[0]) == -1:
+        logger.warn("Bone not found. Bone name is " + row[0])
+        break
+    if bpy.data.objects.find(row[1]) == -1:
+        logger.warn("Object not found. Object name is " + row[1])
+        break
+    bone = bpy.context.object.pose.bones[row[0]]
+    print(bone.name)
+    bone.custom_shape = None
+    bone.custom_shape = bpy.data.objects[row[1]]
 
 logger.end()
 
