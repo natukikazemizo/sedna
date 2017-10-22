@@ -25,6 +25,7 @@ header = [
         "mute",
         "target",
         "subtarget_bone_name",
+        "extrapolate",
         "from_min_x",
         "from_max_x",
         "from_min_y",
@@ -56,6 +57,7 @@ for x in bpy.context.selected_pose_bones:
             data_row.append(y.mute)
             data_row.append(y.target.name)
             data_row.append(y.subtarget)
+            data_row.append(y.use_motion_extrapolate)
             data_row.append(y.from_min_x)
             data_row.append(y.from_max_x)
             data_row.append(y.from_min_y)
