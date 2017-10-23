@@ -135,10 +135,15 @@ for index in range(INSTRUMENTS_CNT):
     for note in midi_data.instruments[index].notes:
         print(note)
         ctrl_bone = piano.pose.bones[BONE_PITCH_DIC[note.pitch]]
-        note_start_frame = START_FRAME + math.floor(FPS * note.start)
-        note_pre_frame = note_start_frame - math.floor(DOWN_FRAME * note.velocity / VELOCITY_MAX)
-        note_end_frame = START_FRAME + math.floor(FPS * note.end)
+        
+        note_pre_frame = START_FRAME + math.floor(145 * FPS / 120 * note.start)
+        note_start_frame = note_pre_frame + math.floor(DOWN_FRAME * note.velocity / VELOCITY_MAX)
+        note_end_frame = START_FRAME + math.floor(145 * FPS / 120 * note.end) - UP_FRAME
         note_up_frame = note_end_frame + UP_FRAME
+        
+        if note_start_frame < note_end_frame:
+            note_start_frame = note_up_frame - 2
+            note_end_frame = note_up_frame - 1
         
         # INSERT KEY FRAMES
         ctrl_bone.location = 0, 0, 0
