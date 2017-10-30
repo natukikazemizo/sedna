@@ -9,10 +9,13 @@ import os
 import utils_log
 
 # CONSTANTS
-ART_NORMAL = "NR"
-ART_SLUR = "SL"
-ART_TENUTO = "TN"
-ART_STACCATO = "ST"
+# Articulation Dictionary
+ART_DIC = {
+    "NR":[1, -7],
+    "SL":[1, -5],
+    "TN":[1, -3],
+    "ST":[1, 1]
+}
 
 START_FRAME = 3048
 FRAME_PAR_MEASURE = 48
@@ -34,6 +37,8 @@ D_RH_ART = {
 3:"NR",
 3.75:"TN",
 }
+
+# MAY UNUSE
 D_RH_REST = {
 1.125:0.625,
 3.5:0.25
@@ -43,6 +48,8 @@ D_LH_ART = {
 0:"ST",
 3.75:"TN",
 }
+
+# MAY UNUSE
 D_LH_REST = {
 0:0
 }
@@ -53,6 +60,23 @@ def find_data_path(bone_name_list, data_path):
             return True, x
     return False, ""
 
+def get_art(art_dic, frame):
+    art = ""
+    for key, value in art_dic.items():
+        art = value
+        if key * FRAME_PAR_MEASURE + START_FRAME >= frame:
+            break
+    return art
+
+def add_keyframe_point(keyframe_points, frame, value):
+    keyframe_points.add(1)
+    index = len(keyframe_points) - 1
+    keyframe_points[index].type =  "BREAKDOWN"
+    keyframe_points[index].co =  frame, value
+    keyframe_points[index].handle_left = frame - 0.5, 0
+    keyframe_points[index].handle_right = frame + 0.5, 0
+
+
 # init logger
 global logger
 logger = utils_log.Util_Log(os.path.basename(__file__))
@@ -61,7 +85,6 @@ logger = utils_log.Util_Log(os.path.basename(__file__))
 logger.start()
 cnt = 0
 axis = ""
-newBreakdownList = []
 
 for x in bpy.data.objects[ARMATURE_NAME].animation_data.action.fcurves:
     oldBreakdownList = []
@@ -78,66 +101,48 @@ for x in bpy.data.objects[ARMATURE_NAME].animation_data.action.fcurves:
             cnt = 0
 
         if axis == "X":
-            print(x.data_path + " " + axis)
-            
             for i, y in enumerate(x.keyframe_points):
                 if y.type == "BREAKDOWN":
                     oldBreakdownList.append(i)
                 elif y.type == "KEYFRAME":
                     keyframeList.append([y.co[0], y.co[1]])
-            print(oldBreakdownList)
-            print(keyframeList)
             
             # delete breakdown
-            print("delete from" + bone_name)
-            bone = bpy.data.objects[ARMATURE_NAME].pose.bones[bone_name]
-            
             oldBreakdownList.reverse()
             for y in oldBreakdownList:
-                #bone.keyframe_delete(data_path = "location", frame = y)
                 x.keyframe_points.remove(x.keyframe_points[y])
 
-            if len(keyframeList) > 0:
-                x.keyframe_points.update()
+            if len(oldBreakdownList) > 0:
+                x.update()
 
             # create breakdown
             newBreakdownList = []
-            for y in keyframeList:
+            for i, y in enumerate(keyframeList):
+                # skip last keyframe
+                if i == len(keyframeList) - 1:
+                    break
+                
                 if y[0] >= START_FRAME:
-                    print(y)
-                    x.keyframe_points.add(1)
-                    index = len(x.keyframe_points) - 1
-                    x.keyframe_points[index].type =  "BREAKDOWN"
+                    art = get_art(D_LH_ART, y[0])
+                    
+                    value = 0
                     if bone_name == "Middle_T.L":
-                        x.keyframe_points[index].co =  y[0] + 1, y[1] / 2
-                        #x.keyframe_points[index].co =  y[0] + 3, -0.1
-                        x.keyframe_points[index].handle_left = y[0] + 0.5, 0
-                        x.keyframe_points[index].handle_right = y[0] + 1.5, 0
-                        #print("x.keyframe_points[index - 1].co[0]" + str(x.keyframe_points[index - 1].co[0]) )
-                        #print("handle_left:" + str(x.keyframe_points[index - 1].handle_left) + "," +  str(x.keyframe_points[index].handle_left))
-                        #print("handle_right:" + str(x.keyframe_points[index - 1].handle_right) + "," + str(x.keyframe_points[index].handle_right))
-                        #bone.location = 0, bone.location[1], bone.location[2]
-                        #bone.keyframe_insert(data_path = "location", frame = y[0] + 1)
+                        value = y[1] / 2
+                    elif bone_name == "Middle_T.L.001":
+                        value = y[1] * 3
+
+                    add_keyframe_point(x.keyframe_points, y[0] - ART_DIC[art][0], value)
+                    
+                    note_end = 0
+                    if ART_DIC[art][1] > 0:
+                        note_end = y[0] + ART_DIC[art][1]
                     else:
-                        x.keyframe_points[index].co =  y[0] + 1, y[1] * 3
-                        x.keyframe_points[index].handle_left = y[0] + 0.5, 0
-                        x.keyframe_points[index].handle_right = y[0] + 1.5, 0
-                        #bone.location = bone.location[0] * 2, bone.location[1], bone.location[2]
-                        #bone.keyframe_insert(data_path = "location", frame = y[0] + 1)
-                    newBreakdownList.append(y[0] + 1)
+                        note_end = keyframeList[i + 1][0] - ART_DIC[art][1]
+                    
+                    add_keyframe_point(x.keyframe_points, note_end, value)
 
             if len(keyframeList) > 0:
-                #x.keyframe_points.update()
                 x.update()
-            
-            for y in x.keyframe_points:
-                if y.co[0] in newBreakdownList:
-                    y.type = "BREAKDOWN"
-#        elif axis == "Y" or axis == "Z":
-#            for y in x.keyframe_points:
-#                if y.co[0] in newBreakdownList:
-#                    y.type = "BREAKDOWN"
-#            x.keyframe_points.update()
 
 # bpy.data.objects[ARMATURE_NAME].pose.bones
 
