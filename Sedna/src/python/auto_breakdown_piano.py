@@ -86,9 +86,9 @@ def get_bone_name(data_path):
 def get_art(art_dic, frame):
     art = ""
     for key, value in art_dic.items():
-        art = value
-        if key * FRAME_PAR_MEASURE + START_FRAME >= frame:
+        if key * FRAME_PAR_MEASURE + START_FRAME > frame:
             break
+        art = value
     return art
 
 def add_keyframe_point(keyframe_points, frame, value):
@@ -146,7 +146,8 @@ def create_breakdown(fcurves, fcurve_index_dic, bone_name, frame, next_frame):
             art = get_art(D_LH_ART, frame)
         else:
             art = get_art(D_RH_ART, frame)
-        print("Frame:"+str(frame) + ",ART:" + art)
+        if bone_name == "Middle_T.L.001":
+            print("frame:" + str(frame) + ",bone_name:" + bone_name + ",art:" + art)
 
         bpy.context.scene.frame_set(frame)
         bones = bpy.data.objects[ARMATURE_NAME].pose.bones
@@ -184,7 +185,6 @@ for fcurve_index, x in enumerate(act.fcurves):
     oldBreakdownList = []
 
     bone_name = get_bone_name(x.data_path)
-    print(bone_name)
 
     if bone_name != "":
         if bone_name in fcurve_index_dic:
@@ -246,7 +246,6 @@ for fcurve_index, x in enumerate(act.fcurves):
                     loc_z = keyframeDic["Z"][i][1]
 
                     if is_play(bone_name, loc_x, loc_y, loc_z):
-                        print("BP0020:" + str(frame) + bone_name )
                         create_breakdown(act.fcurves, fcurve_index_dic, bone_name, frame, \
                                       keyframeDic["X"][i + 1][0])
 
