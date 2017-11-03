@@ -16,7 +16,7 @@ ART_DIC = {
     "NR":[1, -3],
     "SL":[1, -2],
     "TN":[1, -1],
-    "ST":[1, 1]
+    "ST":[1, 2]
 }
 
 START_FRAME = 3048
@@ -45,51 +45,57 @@ RH_NOTE_CTRLS = RH_NOTE_THUMB + RH_NOTE_INDEX_2_LITTLE
 
 AUTO_BONE_LIST = LH_NOTE_CTRLS + RH_NOTE_CTRLS
 
+#Classes
+class Note:
+    loc = [[],[],[],]
+    def __init__(self, art, frame, next_frame):
+        self.art = art
+        self.frame = frame
+        self.next_frame = next_frame
+
+class Art:
+    def __init__(self, measure, art):
+        self.measure = measure
+        self.art = art
+
+
 # PARAMETER
 ARMATURE_NAME = "Dorothy.Armature"
 
-D_RH_ART = {
-0:"NR",
-0.75:"ST",
-1.125:"NR",
-1.875:"ST",
-2.5:"NR",
-2.875:"ST",
-3:"NR",
-3.75:"TN",
-}
+D_RH_ART = [
+Art(0.000, "NR"),
+Art(0.750, "ST"),
+Art(1.125, "NR"),
+Art(1.875, "ST"),
+Art(2.500, "NR"),
+Art(2.875, "ST"),
+Art(3.000, "NR"),
+Art(3.750, "TN")
+]
 
-# MAY UNUSE
-D_RH_REST = {
-1.125:0.625,
-3.5:0.25
-}
+## MAY UNUSE
+#D_RH_REST = {
+#1.125:0.625,
+#3.5:0.25
+#}
 
-D_LH_ART = {
-0:"ST",
-3.75:"TN",
-}
+D_LH_ART = [
+Art(0.000, "ST"),
+Art(3.750, "TN")
+]
 
-# MAY UNUSE
-D_LH_REST = {
-0:0
-}
+## MAY UNUSE
+#D_LH_REST = {
+#0:0
+#}
 
 #globals
 global logger
 global bones
 global bodyModionDic
 
-#Classes
-class Note:
-    art = ""
-    frame = 0
-    next_frame = 0
-    loc = [[],[],[],]
-    def __init__(self, art, frame, next_frame):
-        self.art = art
-        self.frame = frame
-        self.next_frame = next_frame
+
+
 
 #functions
 def find_data_path(bone_name_list, data_path):
@@ -108,12 +114,12 @@ def get_bone_name(data_path):
     else:
         return ""
 
-def get_art(art_dic, frame):
+def get_art(art_list, frame):
     art = ""
-    for key, value in art_dic.items():
-        if key * FRAME_PAR_MEASURE + START_FRAME > frame:
+    for x in art_list:
+        if x.measure * FRAME_PAR_MEASURE + START_FRAME > frame:
             break
-        art = value
+        art = x.art
     return art
 
 def add_keyframe_point(keyframe_points, frame, value):
@@ -179,32 +185,56 @@ def add_note(fcurves, fcurve_index_dic, bone_name, note):
         lr = "R"
         sign = -1
 
-    # add motion on hand
-    hand_t_name = "Hand_T." + lr
-    if update_breakdown_dic(hand_t_name, frames[0]):
-        loc = bones[hand_t_name].location
+    # add motion on Hand
+    t_name = "Hand_T." + lr
+    if update_breakdown_dic(t_name, frames[0]):
+        loc = bones[t_name].location
         locs[0] = [loc[0], loc[1] + 0.0008, loc[2]]
         locs[1] = [loc[0], loc[1], loc[2]]
         locs[2] = [loc[0], loc[1] + 0.0008, loc[2]]
+        frames_hand = [frames[0] - 1, frames[1], frames[2] - 1]
         
-        add_keyframes_fcurve(fcurves, fcurve_index_dic, hand_t_name, note.art, frames, locs)
+        add_keyframes_fcurve(fcurves, fcurve_index_dic, t_name, note.art, frames_hand, locs)
 
-    # add motion on arm
-    arm_t_name = "Arm_T." + lr
-    if update_breakdown_dic(arm_t_name, frames[0]):
-        loc = bones[arm_t_name].location
+    # add motion on Arm
+    t_name = "Arm_T." + lr
+    if update_breakdown_dic(t_name, frames[0]):
+        loc = bones[t_name].location
         locs[0] = [loc[0] - sign * 0.010, loc[1], loc[2]]
         locs[1] = [loc[0], loc[1], loc[2]]
         locs[2] = [loc[0] - sign * 0.008, loc[1], loc[2]]
+        frames_arm = [frames[0] - 2, frames[1], frames[2]]
 
-        add_keyframes_fcurve(fcurves, fcurve_index_dic, arm_t_name, note.art, frames, locs)
+        add_keyframes_fcurve(fcurves, fcurve_index_dic, t_name, note.art, frames_arm, locs)
+
+    # add motion on Elbo
+    t_name = "Elbo_T." + lr
+    if update_breakdown_dic(t_name, frames[0]):
+        loc = bones[t_name].location
+        locs[0] = [loc[0] -sign * 0.005, loc[1] - 0.01, loc[2] + sign * 0.01]
+        locs[1] = [loc[0], loc[1], loc[2]]
+        locs[2] = [loc[0] -sign * 0.005, loc[1] - 0.01, loc[2] + sign * 0.01]
+        frames_arm = [frames[0] - 1, frames[1], frames[2]]
+
+        add_keyframes_fcurve(fcurves, fcurve_index_dic, t_name, note.art, frames_arm, locs)
+
+    # add motion on Shoulder_
+    t_name = "Shoulder_T." + lr
+    if update_breakdown_dic(t_name, frames[0]):
+        loc = bones[t_name].location
+        locs[0] = [loc[0], loc[1] + 0.0010, loc[2]]
+        locs[1] = [loc[0], loc[1], loc[2]]
+        locs[2] = [loc[0], loc[1] + 0.0008, loc[2]]
+        frames_arm = [frames[0] - 1, frames[1], frames[2]]
+
+        add_keyframes_fcurve(fcurves, fcurve_index_dic, t_name, note.art, frames_arm, locs)
+
+
 
 def add_keyframes_fcurve(fcurves, fcurve_index_dic, bone_name, art, frames, locs):
     for i, index in enumerate(fcurve_index_dic[bone_name]):
         add_keyframe_point(fcurves[index].keyframe_points, frames[0], locs[0][i])
-        if art != "ST":
-            # Normal/Slur/Tenuto
-            add_keyframe_point(fcurves[index].keyframe_points, frames[1], locs[1][i])
+        add_keyframe_point(fcurves[index].keyframe_points, frames[1], locs[1][i])
         add_keyframe_point(fcurves[index].keyframe_points, frames[2], locs[2][i])
         fcurves[index].update()
 
@@ -229,8 +259,6 @@ def create_breakdown(fcurves, fcurve_index_dic, bone_name, frame, next_frame):
         else:
             art = get_art(D_RH_ART, frame)
             
-        #print("frame:" + str(frame) + ",bone_name:" + bone_name + ",art:" + art)
-
         note = Note(art, frame, next_frame)
 
         bpy.context.scene.frame_set(frame)
