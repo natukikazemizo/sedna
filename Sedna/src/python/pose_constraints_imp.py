@@ -10,7 +10,7 @@ import utils_log
 import utils_io_csv
 
 # Constants
-WORK_FILE_NAME = "pose_constraints_dl.csv"
+WORK_FILE_NAME = "pose_constraints.csv"
 
 BONE_NAME = 0 
 CONSTRAINT_NAME = 1

@@ -26,20 +26,20 @@ MEASURE = 2
 LH_NOTE_THUMB = ["Thumb_T.L.001"]
 
 LH_NOTE_INDEX_2_LITTLE = [
-    "Index_T.L.001",
-    "Middle_T.L.001",
-    "Ring_T.L.001",
-    "Little_T.L.001"]
+    "Index_T.L.002",
+    "Middle_T.L.002",
+    "Ring_T.L.002",
+    "Little_T.L.002"]
 
 LH_NOTE_CTRLS = LH_NOTE_THUMB + LH_NOTE_INDEX_2_LITTLE
 
 RH_NOTE_THUMB = ["Thumb_T.R.001"]
 
 RH_NOTE_INDEX_2_LITTLE = [
-    "Index_T.R.001",
-    "Middle_T.R.001",
-    "Ring_T.R.001",
-    "Little_T.R.001"]
+    "Index_T.R.002",
+    "Middle_T.R.002",
+    "Ring_T.R.002",
+    "Little_T.R.002"]
 
 RH_NOTE_CTRLS = RH_NOTE_THUMB + RH_NOTE_INDEX_2_LITTLE
 
@@ -276,10 +276,15 @@ def create_breakdown(fcurves, fcurve_index_dic, bone_name, frame, next_frame):
             if bone_name in RH_NOTE_INDEX_2_LITTLE:
                 sign = -1
             
-            # Add Finger 1st, 2nd joints Motion
+            # Add Finger 1st joints Motion
             note.loc[0] =[note.loc[1][0] - 0.003 * sign, note.loc[1][1], note.loc[1][2]]
             note.loc[2] = [note.loc[1][0] - 0.002 * sign, note.loc[1][1], note.loc[1][2]]
             add_note(fcurves, fcurve_index_dic, bone_name, note)
+
+            # Add Finger 2nd joints Motion
+            note.loc[0] =[note.loc[1][0] - 0.003 * sign, note.loc[1][1], note.loc[1][2]]
+            note.loc[2] = [note.loc[1][0] - 0.002 * sign, note.loc[1][1], note.loc[1][2]]
+            add_note(fcurves, fcurve_index_dic, bone_name[:-4] + ".001", note)
             
             # Add Finger 3rd joints Motion
             loc = bones[bone_name[:-4]].location
