@@ -19,7 +19,7 @@ logger = utils_log.Util_Log(os.path.basename(__file__))
 logger.start()
 
 bone_names = []
-header = ["bone_name", "custom_shape"]
+header = ["bone_name", "custom_shape", "custom_shape_scale"]
 bone_names.append(header)
 
 for x in bpy.context.selected_pose_bones:
@@ -28,6 +28,7 @@ for x in bpy.context.selected_pose_bones:
         data_row = []
         data_row.append(x.name)
         data_row.append(x.custom_shape.name)
+        data_row.append(x.custom_shape_scale)
         bone_names.append(data_row)
 
 utils_io_csv.write(WORK_FILE_NAME, bone_names)

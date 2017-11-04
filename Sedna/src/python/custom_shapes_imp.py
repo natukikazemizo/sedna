@@ -31,6 +31,7 @@ for row in data:
     print(bone.name)
     bone.custom_shape = None
     bone.custom_shape = bpy.data.objects[row[1]]
+    bone.custom_shape_scale = float(row[2])
 
 logger.end()
 
