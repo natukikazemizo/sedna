@@ -13,8 +13,8 @@ SCENE_NAME = "Root.DorothyLoris"
 
 # Articulation Dictionary
 ART_DIC = {
-    "NR":[1, -3],
-    "SL":[1, -2],
+    "NR":[1, -2],
+    "SL":[1, -1],
     "TN":[1, -1],
     "ST":[1, 2]
 }
@@ -192,7 +192,7 @@ def add_note(fcurves, fcurve_index_dic, bone_name, note):
         locs[0] = [loc[0], loc[1] + 0.0008, loc[2]]
         locs[1] = [loc[0], loc[1], loc[2]]
         locs[2] = [loc[0], loc[1] + 0.0008, loc[2]]
-        frames_hand = [frames[0] - 1, frames[1], frames[2] - 1]
+        frames_hand = [frames[0], frames[1], frames[2]]
         
         add_keyframes_fcurve(fcurves, fcurve_index_dic, t_name, note.art, frames_hand, locs)
 
@@ -203,7 +203,7 @@ def add_note(fcurves, fcurve_index_dic, bone_name, note):
         locs[0] = [loc[0] - sign * 0.010, loc[1], loc[2]]
         locs[1] = [loc[0], loc[1], loc[2]]
         locs[2] = [loc[0] - sign * 0.008, loc[1], loc[2]]
-        frames_arm = [frames[0] - 2, frames[1], frames[2]]
+        frames_arm = [frames[0], frames[1], frames[2]]
 
         add_keyframes_fcurve(fcurves, fcurve_index_dic, t_name, note.art, frames_arm, locs)
 
@@ -214,7 +214,7 @@ def add_note(fcurves, fcurve_index_dic, bone_name, note):
         locs[0] = [loc[0] -sign * 0.005, loc[1] - 0.01, loc[2] + sign * 0.01]
         locs[1] = [loc[0], loc[1], loc[2]]
         locs[2] = [loc[0] -sign * 0.005, loc[1] - 0.01, loc[2] + sign * 0.01]
-        frames_arm = [frames[0] - 1, frames[1], frames[2]]
+        frames_arm = [frames[0] - 1, frames[1] - 1, frames[2] - 1]
 
         add_keyframes_fcurve(fcurves, fcurve_index_dic, t_name, note.art, frames_arm, locs)
 
@@ -225,7 +225,7 @@ def add_note(fcurves, fcurve_index_dic, bone_name, note):
         locs[0] = [loc[0], loc[1] + 0.0010, loc[2]]
         locs[1] = [loc[0], loc[1], loc[2]]
         locs[2] = [loc[0], loc[1] + 0.0008, loc[2]]
-        frames_arm = [frames[0] - 1, frames[1], frames[2]]
+        frames_arm = [frames[0] - 2, frames[1] - 2, frames[2] -2]
 
         add_keyframes_fcurve(fcurves, fcurve_index_dic, t_name, note.art, frames_arm, locs)
 
@@ -282,6 +282,8 @@ def create_breakdown(fcurves, fcurve_index_dic, bone_name, frame, next_frame):
             add_note(fcurves, fcurve_index_dic, bone_name, note)
 
             # Add Finger 2nd joints Motion
+            loc = bones[bone_name[:-4]].location
+            note.loc[1] = [loc[0], loc[1], loc[2]]
             note.loc[0] =[note.loc[1][0] - 0.003 * sign, note.loc[1][1], note.loc[1][2]]
             note.loc[2] = [note.loc[1][0] - 0.002 * sign, note.loc[1][1], note.loc[1][2]]
             add_note(fcurves, fcurve_index_dic, bone_name[:-4] + ".001", note)
