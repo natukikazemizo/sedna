@@ -140,8 +140,8 @@ for index in range(INSTRUMENTS_CNT):
         #note_start_frame = note_pre_frame + math.floor(DOWN_FRAME * note.velocity / VELOCITY_MAX)
         note_start_frame = note_pre_frame + 1
         #note_end_frame = START_FRAME + math.floor(145 * FPS / 120 * note.end) - UP_FRAME
-        note_end_frame = START_FRAME + math.floor(145 * FPS / 120 * note.end) - 1
-        note_up_frame = note_end_frame
+        note_end_frame = START_FRAME + math.floor(145 * FPS / 120 * note.end) - 2
+        note_up_frame = note_end_frame + 1
         # + UP_FRAME
         
         #if note_start_frame > note_end_frame:
