@@ -20,6 +20,7 @@ ART_DIC = {
 }
 
 START_FRAME = 3048
+END_FRAME = 3143
 FRAME_PAR_MEASURE = 48
 MEASURE = 2
 
@@ -356,7 +357,7 @@ def add_keyframe_point(keyframe_points, frame, value):
 
 def is_play(bone_name, x, y, z):
     if bone_name in ["Thumb_T.L.001", "Thumb_T.R.001"]:
-        if z < - 0.015:
+        if z < 0.002:
             return True
         else:
             return False
@@ -413,9 +414,9 @@ def add_note(fcurves, fcurve_index_dic, bone_name, note):
     t_name = "Hand_T." + lr
     if update_breakdown_dic(t_name, frames[0]):
         loc = bones[t_name].location
-        locs[0] = [loc[0], loc[1] + 0.0008, loc[2]]
+        locs[0] = [loc[0], loc[1] + 0.00005, loc[2]]
         locs[1] = [loc[0], loc[1], loc[2]]
-        locs[2] = [loc[0], loc[1] + 0.0008, loc[2]]
+        locs[2] = [loc[0], loc[1] + 0.00005, loc[2]]
         frames_hand = [frames[0], frames[1], frames[2]]
 
         add_keyframes_fcurve(fcurves, fcurve_index_dic, t_name, note.art, frames_hand, locs)
@@ -476,7 +477,7 @@ def update_breakdown_dic(bone_name, frame):
 
 
 def create_breakdown(armature_name, fcurves, fcurve_index_dic, bone_name, frame, next_frame):
-    if frame >= START_FRAME:
+    if frame >= START_FRAME and frame <= END_FRAME:
         newBreakdownList = []
         art = ""
         if bone_name in LH_NOTE_CTRLS:
@@ -502,22 +503,22 @@ def create_breakdown(armature_name, fcurves, fcurve_index_dic, bone_name, frame,
                 sign = -1
 
             # Add Finger 1st joints Motion
-            note.loc[0] =[note.loc[1][0] - 0.003 * sign, note.loc[1][1], note.loc[1][2]]
-            note.loc[2] = [note.loc[1][0] - 0.002 * sign, note.loc[1][1], note.loc[1][2]]
+            note.loc[0] =[note.loc[1][0] - 0.0015 * sign, note.loc[1][1], note.loc[1][2]]
+            note.loc[2] = [note.loc[1][0] - 0.001 * sign, note.loc[1][1], note.loc[1][2]]
             add_note(fcurves, fcurve_index_dic, bone_name, note)
 
             # Add Finger 2nd joints Motion
-            loc = bones[bone_name[:-4]].location
+            loc = bones[bone_name[:-4] + ".001"].location
             note.loc[1] = [loc[0], loc[1], loc[2]]
-            note.loc[0] =[note.loc[1][0] - 0.003 * sign, note.loc[1][1], note.loc[1][2]]
-            note.loc[2] = [note.loc[1][0] - 0.002 * sign, note.loc[1][1], note.loc[1][2]]
+            note.loc[0] =[note.loc[1][0] - 0.0015 * sign, note.loc[1][1], note.loc[1][2]]
+            note.loc[2] = [note.loc[1][0] - 0.001 * sign, note.loc[1][1], note.loc[1][2]]
             add_note(fcurves, fcurve_index_dic, bone_name[:-4] + ".001", note)
 
             # Add Finger 3rd joints Motion
             loc = bones[bone_name[:-4]].location
             note.loc[1] = [loc[0], loc[1], loc[2]]
-            note.loc[0] = [note.loc[1][0] + 0.002 * sign, note.loc[1][1], note.loc[1][2]]
-            note.loc[2] = [note.loc[1][0] + 0.0025 * sign, note.loc[1][1], note.loc[1][2]]
+            note.loc[0] = [note.loc[1][0] + 0.001 * sign, note.loc[1][1], note.loc[1][2]]
+            note.loc[2] = [note.loc[1][0] + 0.00125 * sign, note.loc[1][1], note.loc[1][2]]
             add_note(fcurves, fcurve_index_dic, bone_name[:-4], note)
 
 
@@ -557,6 +558,7 @@ def auto_breakdown(armature_name):
             for y in oldBreakdownList:
                 x.keyframe_points.remove(x.keyframe_points[y])
             x.update()
+    
 
     # create breakdown
     for fcurve_index, x in enumerate(act.fcurves):
@@ -602,8 +604,6 @@ def auto_breakdown(armature_name):
                         if is_play(bone_name, loc_x, loc_y, loc_z):
                             create_breakdown(armature_name, act.fcurves, fcurve_index_dic, bone_name, frame, \
                                           keyframeDic["X"][i + 1][0])
-
-
 
 # init logger
 logger = utils_log.Util_Log(os.path.basename(__file__))
