@@ -59,6 +59,28 @@ class Art:
         self.measure = measure
         self.art = art
 
+class NoteOnHand:
+    def __init__(self, start_frame):
+        self.start_frame = start_frame
+        self.thumb = -1
+        self.index = -1
+        self.middle = -1
+        self.ring = -1
+        self.little = -1
+
+    def set(self, bone_name, end_frame):
+        if bone_name == "Thumb_T.L.001" or bone_name == "Thumb_T.R.001":
+            self.thumb = end_frame
+        elif bone_name == "Index_T.L.002" or bone_name == "Index_T.R.002":
+            self.index = end_frame
+        elif bone_name == "Middle_T.L.002" or bone_name == "Middle_T.R.002":
+            self.middle = end_frame
+        elif bone_name == "Ring_T.L.002" or bone_name == "Ring_T.R.002":
+            self.ring = end_frame
+        elif bone_name == "Little_T.L.002" or bone_name == "Little_T.R.002":
+            self.little = end_frame
+
+
 
 # PARAMETER
 ARMATURE_NAME_LIST = ["Dorothy.Armature", "Loris.Armature"]
@@ -317,11 +339,14 @@ LH_ART = {
 global logger
 global bones
 global bodyModionDic
+global lhNoteDic
+global rhNoteDic
 
 
 
 
 #functions
+"""find bone_name from from data_path"""
 def find_data_path(bone_name_list, data_path):
     for x in bone_name_list:
         if data_path == 'pose.bones["' + x + '"].location':
@@ -339,7 +364,7 @@ def get_bone_name(data_path):
         return ""
 
 def get_art(art_list, frame):
-    art = ""
+    art = art_list[0].art
     for x in art_list:
         if x.measure * FRAME_PAR_MEASURE + START_FRAME > frame:
             break
@@ -525,10 +550,14 @@ def create_breakdown(armature_name, fcurves, fcurve_index_dic, bone_name, frame,
 def auto_breakdown(armature_name):
     global bones
     global bodyModionDic
+    global lhNoteDic
+    global rhNoteDic
     bones = bpy.data.objects[armature_name].pose.bones
     bodyModionDic = {}
+    lhNoteDic = {}
+    rhNoteDic = {}
 
-    logger.start()
+
     cnt = 0
     axis = ""
     keyframeDic = {}
@@ -558,7 +587,7 @@ def auto_breakdown(armature_name):
             for y in oldBreakdownList:
                 x.keyframe_points.remove(x.keyframe_points[y])
             x.update()
-    
+
 
     # create breakdown
     for fcurve_index, x in enumerate(act.fcurves):
@@ -605,13 +634,40 @@ def auto_breakdown(armature_name):
                             create_breakdown(armature_name, act.fcurves, fcurve_index_dic, bone_name, frame, \
                                           keyframeDic["X"][i + 1][0])
 
+                        # create Note on hand dic
+                        handDic = {}
+                        if bone_name in LH_NOTE_CTRLS:
+                            handDic = lhNoteDic
+                        else:
+                            handDic = rhNoteDic
+
+                        if frame not in handDic:
+                            handDic.update({frame:NoteOnHand(frame)})
+
+                        note_end_frame = 0
+                        if is_play(bone_name, loc_x, loc_y, loc_z):
+                            art = ""
+                            if bone_name in LH_NOTE_CTRLS:
+                                art = get_art(LH_ART[armature_name], frame)
+                            else:
+                                art = get_art(RH_ART[armature_name], frame)
+                            note = Note(art, frame, keyframeDic["X"][i + 1][0])
+                            frames = get_note_frames(note)
+                            note_end_frame = frames[2]
+
+                        handDic[frame].set(bone_name, note_end_frame)
+
 # init logger
 logger = utils_log.Util_Log(os.path.basename(__file__))
 
+logger.start()
+
 for x in ARMATURE_NAME_LIST:
+    print(x)
     auto_breakdown(x)
 
-
+sorted(lhNoteDic.keys())
+print(sorted(lhNoteDic.keys()))
 
 logger.end()
 
