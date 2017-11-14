@@ -10,6 +10,8 @@ import utils_log
 
 # CONSTANTS
 SCENE_NAME = "Root.DorothyLoris"
+LEFT = "L"
+RIGHT = "R"
 
 # Articulation Dictionary
 ART_DIC = {
@@ -62,13 +64,14 @@ class Art:
 class NoteOnHand:
     def __init__(self, start_frame):
         self.start_frame = start_frame
-        self.thumb = -1
-        self.index = -1
-        self.middle = -1
-        self.ring = -1
-        self.little = -1
+        self.thumb = [-1, -1, -1]
+        self.index = [-1, -1, -1]
+        self.middle = [-1, -1, -1]
+        self.ring = [-1, -1, -1]
+        self.little = [-1, -1, -1]
+        self.art = ""
 
-    def set(self, bone_name, end_frame):
+    def set(self, bone_name, end_frame, art):
         if bone_name == "Thumb_T.L.001" or bone_name == "Thumb_T.R.001":
             self.thumb = end_frame
         elif bone_name == "Index_T.L.002" or bone_name == "Index_T.R.002":
@@ -79,7 +82,8 @@ class NoteOnHand:
             self.ring = end_frame
         elif bone_name == "Little_T.L.002" or bone_name == "Little_T.R.002":
             self.little = end_frame
-
+        if art != "":
+            self.art = art
 
 
 # PARAMETER
@@ -335,6 +339,7 @@ LH_ART = {
     ]
 }
 
+
 #globals
 global logger
 global bones
@@ -343,17 +348,16 @@ global lhNoteDic
 global rhNoteDic
 
 
-
-
 #functions
-"""find bone_name from from data_path"""
 def find_data_path(bone_name_list, data_path):
+    """find bone_name from from data_path"""
     for x in bone_name_list:
         if data_path == 'pose.bones["' + x + '"].location':
             return True, x
     return False, ""
 
 def get_bone_name(data_path):
+    """get bone name from data_path"""
     if "].location" in data_path:
         index = data_path.find('"')
         str = data_path[index + 1:]
@@ -364,21 +368,13 @@ def get_bone_name(data_path):
         return ""
 
 def get_art(art_list, frame):
+    """get art"""
     art = art_list[0].art
     for x in art_list:
         if x.measure * FRAME_PAR_MEASURE + START_FRAME > frame:
             break
         art = x.art
     return art
-
-
-def add_keyframe_point(keyframe_points, frame, value):
-    keyframe_points.add(1)
-    index = len(keyframe_points) - 1
-    keyframe_points[index].type =  "BREAKDOWN"
-    keyframe_points[index].co =  frame, value
-    keyframe_points[index].handle_left = frame - 0.5, 0
-    keyframe_points[index].handle_right = frame + 0.5, 0
 
 def is_play(bone_name, x, y, z):
     if bone_name in ["Thumb_T.L.001", "Thumb_T.R.001"]:
@@ -423,71 +419,76 @@ def add_note(fcurves, fcurve_index_dic, bone_name, note):
     locs = [[],[],[]]
 
     frames = get_note_frames(note)
-    add_keyframes_fcurve(fcurves, fcurve_index_dic, bone_name, note.art, frames, note.loc)
+
+    motion = {frames[0]:note.loc[0],
+              frames[1]:note.loc[1],
+              frames[2]:note.loc[2]}
+
+    add_motion(fcurves, fcurve_index_dic, bone_name, note.art, motion_dic)
 
     # logging
     print(str(note.frame)+ " art:" + note.art + " " + bone_name)
 
     # get left or right and sign
-    lr = "L"
+    lr = LEFT
     sign = 1
     if bone_name in RH_NOTE_CTRLS:
-        lr = "R"
+        lr = RIGHT
         sign = -1
 
     # add motion on Hand
     t_name = "Hand_T." + lr
     if update_breakdown_dic(t_name, frames[0]):
         loc = bones[t_name].location
-        locs[0] = [loc[0], loc[1] + 0.00005, loc[2]]
-        locs[1] = [loc[0], loc[1], loc[2]]
-        locs[2] = [loc[0], loc[1] + 0.00005, loc[2]]
-        frames_hand = [frames[0], frames[1], frames[2]]
+        hand_motion = {frames[0]:[loc[0], loc[1] + 0.00005, loc[2]],
+                       frames[1]:[loc[0], loc[1], loc[2]],
+                       frames[2]:[loc[0], loc[1] + 0.00005, loc[2]]}
 
-        add_keyframes_fcurve(fcurves, fcurve_index_dic, t_name, note.art, frames_hand, locs)
+        add_motion(fcurves, fcurve_index_dic, t_name, note.art, hand_motion)
 
     # add motion on Arm
     t_name = "Arm_T." + lr
     if update_breakdown_dic(t_name, frames[0]):
         loc = bones[t_name].location
-        locs[0] = [loc[0] - sign * 0.010, loc[1], loc[2]]
-        locs[1] = [loc[0], loc[1], loc[2]]
-        locs[2] = [loc[0] - sign * 0.008, loc[1], loc[2]]
-        frames_arm = [frames[0], frames[1], frames[2]]
+        arm_motion = {frames[0]:[loc[0] - sign * 0.010, loc[1], loc[2]],
+                      frames[1]:[loc[0], loc[1], loc[2]],
+                      frames[2]:[loc[0] - sign * 0.008, loc[1], loc[2]]}
 
-        add_keyframes_fcurve(fcurves, fcurve_index_dic, t_name, note.art, frames_arm, locs)
+        add_motion(fcurves, fcurve_index_dic, t_name, note.art, arm_motion)
 
     # add motion on Elbo
     t_name = "Elbo_T." + lr
     if update_breakdown_dic(t_name, frames[0]):
         loc = bones[t_name].location
-        locs[0] = [loc[0] -sign * 0.005, loc[1] - 0.01, loc[2] + sign * 0.01]
-        locs[1] = [loc[0], loc[1], loc[2]]
-        locs[2] = [loc[0] -sign * 0.005, loc[1] - 0.01, loc[2] + sign * 0.01]
-        frames_arm = [frames[0] - 1, frames[1] - 1, frames[2] - 1]
+        elbo_motion = {frames[0] - 1:[loc[0] -sign * 0.005, loc[1] - 0.01, loc[2] + sign * 0.01],
+                       frames[1] - 1:[loc[0], loc[1], loc[2]],
+                       frames[2] - 1:[loc[0] -sign * 0.005, loc[1] - 0.01, loc[2] + sign * 0.01]}
 
-        add_keyframes_fcurve(fcurves, fcurve_index_dic, t_name, note.art, frames_arm, locs)
+        add_motion(fcurves, fcurve_index_dic, t_name, note.art, elbo_motion)
 
     # add motion on Shoulder_
     t_name = "Shoulder_T." + lr
     if update_breakdown_dic(t_name, frames[0]):
         loc = bones[t_name].location
-        locs[0] = [loc[0], loc[1] + 0.0010, loc[2]]
-        locs[1] = [loc[0], loc[1], loc[2]]
-        locs[2] = [loc[0], loc[1] + 0.0008, loc[2]]
-        frames_arm = [frames[0] - 2, frames[1] - 2, frames[2] -2]
+        shoulder_motion = {frames[0] - 2:[loc[0], loc[1] + 0.0010, loc[2]],
+                           frames[1] - 2:[loc[0], loc[1], loc[2]],
+                           frames[2] - 2:[loc[0], loc[1] + 0.0008, loc[2]]}
 
-        add_keyframes_fcurve(fcurves, fcurve_index_dic, t_name, note.art, frames_arm, locs)
+        add_motion(fcurves, fcurve_index_dic, t_name, note.art, shoulder_motion)
 
-
-
-def add_keyframes_fcurve(fcurves, fcurve_index_dic, bone_name, art, frames, locs):
+def add_motion(fcurves, fcurve_index_dic, bone_name, art, frames, locs):
     for i, index in enumerate(fcurve_index_dic[bone_name]):
-        add_keyframe_point(fcurves[index].keyframe_points, frames[0], locs[0][i])
-        add_keyframe_point(fcurves[index].keyframe_points, frames[1], locs[1][i])
-        add_keyframe_point(fcurves[index].keyframe_points, frames[2], locs[2][i])
+        for x in sorted(motion.keys()):
+            add_keyframe_point(fcurves[index].keyframe_points, x, motion[x][i])
         fcurves[index].update()
 
+def add_keyframe_point(keyframe_points, frame, value):
+    keyframe_points.add(1)
+    index = len(keyframe_points) - 1
+    keyframe_points[index].type =  "BREAKDOWN"
+    keyframe_points[index].co =  frame, value
+    keyframe_points[index].handle_left = frame - 0.5, 0
+    keyframe_points[index].handle_right = frame + 0.5, 0
 
 def update_breakdown_dic(bone_name, frame):
     global bodyModionDic
@@ -501,50 +502,105 @@ def update_breakdown_dic(bone_name, frame):
     return ret
 
 
-def create_breakdown(armature_name, fcurves, fcurve_index_dic, bone_name, frame, next_frame):
+def create_breakdown(armature_name, fcurves, fcurve_index_dic, frame_list, index, handNoteDic, lr):
+    frame = frame_list[index]
+    next_frame = frame_list[index + 1]
+    handDic = handNoteDic[frame_list[index]]
+    next_handDic = handNoteDic[frame_list[index + 1]]
+
     if frame >= START_FRAME and frame <= END_FRAME:
-        newBreakdownList = []
-        art = ""
-        if bone_name in LH_NOTE_CTRLS:
-            art = get_art(LH_ART[armature_name], frame)
-        else:
-            art = get_art(RH_ART[armature_name], frame)
+        # SKIP when articulation is blank
+        if handDic.art == "":
+            return
 
-        note = Note(art, frame, next_frame)
-
+        # set current frame
         bpy.context.scene.frame_set(frame)
 
+        # get start/leave/end frame on hand
+        start_list = []
+        leave_list = []
+        end_list = []
+        lists = [start_list, leave_list, end_list]
+
+        store_lists(handDic.thumb, lists)
+        store_lists(handDic.index, lists)
+        store_lists(handDic.middle, lists)
+        store_lists(handDic.ring, lists)
+        store_lists(handDic.little, lists)
+
+        start_frame = min(start_list)
+        leave_frame = max(leave_list)
+        endng_frame = max(end_list)
+
+        # create thumb motion
+        bone_name = "Thumb_T." + lr + ".001"
         loc = bones[bone_name].location
-        note.loc[1] = [loc[0], loc[1], loc[2]]
+        if handDic.thumb[0] == 0:
+            motion = {start_frame:[loc[0], loc[1], loc[2] + 0.010],
+                      leave_frame:[loc[0], loc[1], loc[2]],
+                      endng_frame:[loc[0], loc[1], loc[2] + 0.0075]}
+            add_motion(fcurves, fcurve_index_dic, bone_name, handDic.art, motion)
+        elif handDic.thumb[0] > 0:
+            motion = {handDic.thumb[0]:[loc[0], loc[1], loc[2] + 0.020],
+                      handDic.thumb[1]:[loc[0], loc[1], loc[2]],
+                      handDic.thumb[2]:[loc[0], loc[1], loc[2] + 0.015]}
+            add_motion(fcurves, fcurve_index_dic, bone_name, handDic.art, motion)
 
-        if bone_name in LH_NOTE_THUMB + RH_NOTE_THUMB:
-            # Add Thumb joints Motion
-            note.loc[0] =[note.loc[1][0], note.loc[1][1], note.loc[1][2] + 0.020]
-            note.loc[2] = [note.loc[1][0], note.loc[1][1], note.loc[1][2] + 0.015]
-            add_note(fcurves, fcurve_index_dic, bone_name, note)
-        elif bone_name in LH_NOTE_INDEX_2_LITTLE + RH_NOTE_INDEX_2_LITTLE:
-            sign = 1
-            if bone_name in RH_NOTE_INDEX_2_LITTLE:
-                sign = -1
+        # create index to little motion
 
-            # Add Finger 1st joints Motion
-            note.loc[0] =[note.loc[1][0] - 0.0015 * sign, note.loc[1][1], note.loc[1][2]]
-            note.loc[2] = [note.loc[1][0] - 0.001 * sign, note.loc[1][1], note.loc[1][2]]
-            add_note(fcurves, fcurve_index_dic, bone_name, note)
+
+
+
+
+        #newBreakdownList = []
+        #art = ""
+        #if bone_name in LH_NOTE_CTRLS:
+        #    art = get_art(LH_ART[armature_name], frame)
+        #else:
+        #    art = get_art(RH_ART[armature_name], frame)
+
+        #note = Note(art, frame, next_frame)
+
+
+        #loc = bones[bone_name].location
+        #note.loc[1] = [loc[0], loc[1], loc[2]]
+
+        #if bone_name in LH_NOTE_THUMB + RH_NOTE_THUMB:
+        #    # Add Thumb joints Motion
+        #    note.loc[0] =[note.loc[1][0], note.loc[1][1], note.loc[1][2] + 0.020]
+        #    note.loc[2] = [note.loc[1][0], note.loc[1][1], note.loc[1][2] + 0.015]
+        #    add_note(fcurves, fcurve_index_dic, bone_name, note)
+        #elif bone_name in LH_NOTE_INDEX_2_LITTLE + RH_NOTE_INDEX_2_LITTLE:
+        #    sign = 1
+        #    if bone_name in RH_NOTE_INDEX_2_LITTLE:
+        #        sign = -1
+
+        #    # Add Finger 1st joints Motion
+        #    note.loc[0] =[note.loc[1][0] - 0.0015 * sign, note.loc[1][1], note.loc[1][2]]
+        #    note.loc[2] = [note.loc[1][0] - 0.001 * sign, note.loc[1][1], note.loc[1][2]]
+        #    add_note(fcurves, fcurve_index_dic, bone_name, note)
 
             # Add Finger 2nd joints Motion
-            loc = bones[bone_name[:-4] + ".001"].location
-            note.loc[1] = [loc[0], loc[1], loc[2]]
-            note.loc[0] =[note.loc[1][0] - 0.0015 * sign, note.loc[1][1], note.loc[1][2]]
-            note.loc[2] = [note.loc[1][0] - 0.001 * sign, note.loc[1][1], note.loc[1][2]]
-            add_note(fcurves, fcurve_index_dic, bone_name[:-4] + ".001", note)
+        #    loc = bones[bone_name[:-4] + ".001"].location
+        #    note.loc[1] = [loc[0], loc[1], loc[2]]
+        #    note.loc[0] =[note.loc[1][0] - 0.0015 * sign, note.loc[1][1], note.loc[1][2]]
+        #    note.loc[2] = [note.loc[1][0] - 0.001 * sign, note.loc[1][1], note.loc[1][2]]
+        #    add_note(fcurves, fcurve_index_dic, bone_name[:-4] + ".001", note)
 
             # Add Finger 3rd joints Motion
-            loc = bones[bone_name[:-4]].location
-            note.loc[1] = [loc[0], loc[1], loc[2]]
-            note.loc[0] = [note.loc[1][0] + 0.001 * sign, note.loc[1][1], note.loc[1][2]]
-            note.loc[2] = [note.loc[1][0] + 0.00125 * sign, note.loc[1][1], note.loc[1][2]]
-            add_note(fcurves, fcurve_index_dic, bone_name[:-4], note)
+        #    loc = bones[bone_name[:-4]].location
+        #    note.loc[1] = [loc[0], loc[1], loc[2]]
+        #    note.loc[0] = [note.loc[1][0] + 0.001 * sign, note.loc[1][1], note.loc[1][2]]
+        #    note.loc[2] = [note.loc[1][0] + 0.00125 * sign, note.loc[1][1], note.loc[1][2]]
+        #    add_note(fcurves, fcurve_index_dic, bone_name[:-4], note)
+
+def store_lists(frames, lists):
+    if frames[0] > 0:
+        lists[0].append(frames[0])
+    if frames[1] > 0:
+        lists[1].append(frames[1])
+    if frames[2] > 0:
+        lists[2].append(frames[2])
 
 
 def auto_breakdown(armature_name):
@@ -589,7 +645,7 @@ def auto_breakdown(armature_name):
             x.update()
 
 
-    # create breakdown
+    # create frame dic on hands
     for fcurve_index, x in enumerate(act.fcurves):
         if cnt == 0:
             keyframeDic = {}
@@ -630,9 +686,9 @@ def auto_breakdown(armature_name):
                         loc_y = keyframeDic["Y"][i][1]
                         loc_z = keyframeDic["Z"][i][1]
 
-                        if is_play(bone_name, loc_x, loc_y, loc_z):
-                            create_breakdown(armature_name, act.fcurves, fcurve_index_dic, bone_name, frame, \
-                                          keyframeDic["X"][i + 1][0])
+                        #if is_play(bone_name, loc_x, loc_y, loc_z):
+                        #    create_breakdown(armature_name, act.fcurves, fcurve_index_dic, bone_name, frame, \
+                        #                  keyframeDic["X"][i + 1][0])
 
                         # create Note on hand dic
                         handDic = {}
@@ -644,18 +700,26 @@ def auto_breakdown(armature_name):
                         if frame not in handDic:
                             handDic.update({frame:NoteOnHand(frame)})
 
-                        note_end_frame = 0
+                        frames = [0, 0, 0]
+                        art = ""
                         if is_play(bone_name, loc_x, loc_y, loc_z):
-                            art = ""
                             if bone_name in LH_NOTE_CTRLS:
                                 art = get_art(LH_ART[armature_name], frame)
                             else:
                                 art = get_art(RH_ART[armature_name], frame)
                             note = Note(art, frame, keyframeDic["X"][i + 1][0])
                             frames = get_note_frames(note)
-                            note_end_frame = frames[2]
 
-                        handDic[frame].set(bone_name, note_end_frame)
+                        handDic[frame].set(bone_name, frames, art)
+
+    frame_list = sorted(lhNoteDic.keys())
+    # create breakdown
+    for index in range(len(frame_list)- 1):
+        create_breakdown(armature_name, act.fcurves, fcurve_index_dic, frame_list, index, lhNoteDic, LEFT)
+
+    for index in range(len(frame_list)- 1):
+        create_breakdown(armature_name, act.fcurves, fcurve_index_dic, frame_list, index, rhNoteDic, RIGHT)
+
 
 # init logger
 logger = utils_log.Util_Log(os.path.basename(__file__))
@@ -665,9 +729,6 @@ logger.start()
 for x in ARMATURE_NAME_LIST:
     print(x)
     auto_breakdown(x)
-
-sorted(lhNoteDic.keys())
-print(sorted(lhNoteDic.keys()))
 
 logger.end()
 
