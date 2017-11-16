@@ -22,7 +22,8 @@ ART_DIC = {
 }
 
 START_FRAME = 3048
-END_FRAME = 3143
+#END_FRAME = 3143
+END_FRAME = 6800
 FRAME_PAR_MEASURE = 48
 MEASURE = 2
 
@@ -460,9 +461,9 @@ def create_breakdown(armature_name, fcurves, fcurve_index_dic, frame_list, index
         bone_name = "Thumb_T." + lr + ".001"
         loc = bones[bone_name].location
         if handDic.thumb[0] == 0:
-            motion = {start_frame:[loc[0], loc[1], loc[2] + 0.010],
+            motion = {start_frame:[loc[0], loc[1], loc[2] + 0.002],
                       leave_frame:[loc[0], loc[1], loc[2]],
-                      endng_frame:[loc[0], loc[1], loc[2] + 0.0075]}
+                      endng_frame:[loc[0], loc[1], loc[2] + 0.0015]}
             add_motion(fcurves, fcurve_index_dic, bone_name, handDic.art, motion)
         elif handDic.thumb[0] > 0:
             motion = {handDic.thumb[0]:[loc[0], loc[1], loc[2] + 0.020],
@@ -521,7 +522,7 @@ def create_breakdown(armature_name, fcurves, fcurve_index_dic, frame_list, index
 def create_index2little_breakdow(fcurves, fcurve_index_dic, lr, bone_name_key, finger_range, max_range, art):
     # get sign from lr
     sign = 1
-    if lr == RIGHT:
+    if lr == LEFT:
         sign = - 1
 
     # Add Finger 1st joints Motion
@@ -529,9 +530,9 @@ def create_index2little_breakdow(fcurves, fcurve_index_dic, lr, bone_name_key, f
     loc = bones[bone_name].location
 
     if finger_range[0] == 0:
-        motion = {max_range[0]:[loc[0] - 0.00075 * sign, loc[1], loc[2]],
+        motion = {max_range[0]:[loc[0] - 0.00015 * sign, loc[1], loc[2]],
                   max_range[1]:[loc[0], loc[1], loc[2]],
-                  max_range[2]:[loc[0] - 0.0005 * sign, loc[1], loc[2]]}
+                  max_range[2]:[loc[0] - 0.0001 * sign, loc[1], loc[2]]}
         add_motion(fcurves, fcurve_index_dic, bone_name, art, motion)
     elif finger_range[0] > 0:
         motion = {finger_range[0]:[loc[0] - 0.0015 * sign, loc[1], loc[2]],
@@ -544,9 +545,9 @@ def create_index2little_breakdow(fcurves, fcurve_index_dic, lr, bone_name_key, f
     loc = bones[bone_name].location
 
     if finger_range[0] == 0:
-        motion = {max_range[0]:[loc[0] - 0.00075 * sign, loc[1], loc[2]],
+        motion = {max_range[0]:[loc[0] - 0.00015 * sign, loc[1], loc[2]],
                   max_range[1]:[loc[0], loc[1], loc[2]],
-                  max_range[2]:[loc[0] - 0.0005 * sign, loc[1], loc[2]]}
+                  max_range[2]:[loc[0] - 0.0001 * sign, loc[1], loc[2]]}
         add_motion(fcurves, fcurve_index_dic, bone_name, art, motion)
     elif finger_range[0] > 0:
         motion = {finger_range[0]:[loc[0] - 0.0015 * sign, loc[1], loc[2]],
@@ -559,9 +560,9 @@ def create_index2little_breakdow(fcurves, fcurve_index_dic, lr, bone_name_key, f
     loc = bones[bone_name].location
 
     if finger_range[0] == 0:
-        motion = {max_range[0]:[loc[0] - 0.0005 * sign, loc[1], loc[2]],
+        motion = {max_range[0]:[loc[0] - 0.0001 * sign, loc[1], loc[2]],
                   max_range[1]:[loc[0], loc[1], loc[2]],
-                  max_range[2]:[loc[0] - 0.000625 * sign, loc[1], loc[2]]}
+                  max_range[2]:[loc[0] - 0.000125 * sign, loc[1], loc[2]]}
         add_motion(fcurves, fcurve_index_dic, bone_name, art, motion)
     elif finger_range[0] > 0:
         motion = {finger_range[0]:[loc[0] - 0.001 * sign, loc[1], loc[2]],
