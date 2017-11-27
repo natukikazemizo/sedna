@@ -13,17 +13,22 @@ SCENE_NAME = "Root.DorothyLoris"
 LEFT = "L"
 RIGHT = "R"
 
+ART_NORMAL = "NR"
+ART_SLUR = "SL"
+ART_TENUTO = "TN"
+ART_STACCATO = "ST"
+
 # Articulation Dictionary
 ART_DIC = {
-    "NR":[1, -2],
-    "SL":[1, -1],
-    "TN":[1, -1],
-    "ST":[1, 2]
+    ART_NORMAL:[1, -2],
+    ART_SLUR:[1, -1],
+    ART_TENUTO:[1, -1],
+    ART_STACCATO:[1, 2]
 }
 
 START_FRAME = 3048
-#END_FRAME = 3143
-END_FRAME = 6800
+END_FRAME = 3059
+#END_FRAME = 6800
 FRAME_PAR_MEASURE = 48
 MEASURE = 2
 
@@ -472,10 +477,10 @@ def create_breakdown(armature_name, fcurves, fcurve_index_dic, frame_list, index
             add_motion(fcurves, fcurve_index_dic, bone_name, handDic.art, motion)
 
         # create index to little motion
-        create_index2little_breakdow(fcurves, fcurve_index_dic, lr, "Index_T", handDic.index, max_range, handDic.art)
-        create_index2little_breakdow(fcurves, fcurve_index_dic, lr, "Middle_T", handDic.middle, max_range, handDic.art)
-        create_index2little_breakdow(fcurves, fcurve_index_dic, lr, "Ring_T", handDic.ring, max_range, handDic.art)
-        create_index2little_breakdow(fcurves, fcurve_index_dic, lr, "Little_T", handDic.little, max_range, handDic.art)
+        create_index2little_breakdown(fcurves, fcurve_index_dic, lr, "Index_T", handDic.index, max_range, handDic.art)
+        create_index2little_breakdown(fcurves, fcurve_index_dic, lr, "Middle_T", handDic.middle, max_range, handDic.art)
+        create_index2little_breakdown(fcurves, fcurve_index_dic, lr, "Ring_T", handDic.ring, max_range, handDic.art)
+        create_index2little_breakdown(fcurves, fcurve_index_dic, lr, "Little_T", handDic.little, max_range, handDic.art)
 
         # get sign
         sign = 1
@@ -485,29 +490,38 @@ def create_breakdown(armature_name, fcurves, fcurve_index_dic, frame_list, index
         # add motion on Hand
         bone_name = "Hand_T." + lr
         loc = bones[bone_name].location
-        hand_motion = {max_range[0]:[loc[0], loc[1] + 0.00005, loc[2]],
-                       max_range[1]:[loc[0], loc[1], loc[2]],
-                       max_range[2]:[loc[0], loc[1] + 0.00005, loc[2]]}
+        if handDic.art == ART_STACCATO:
+            hand_motion = {max_range[0]:[loc[0], loc[1] + 0.0010, loc[2]],
+                           max_range[1]:[loc[0], loc[1] + 0.0007, loc[2]]}
+        else:
+            hand_motion = {max_range[0]:[loc[0], loc[1] + 0.00005, loc[2]],
+                           max_range[1] + 1:[loc[0], loc[1] + 0.00005, loc[2]],
+                           max_range[2] + 1:[loc[0], loc[1] + 0.00010, loc[2]]}
+                
 
         add_motion(fcurves, fcurve_index_dic, bone_name, handDic.art, hand_motion)
 
         # add motion on Arm
         bone_name = "Arm_T." + lr
         loc = bones[bone_name].location
-        arm_motion = {max_range[0]:[loc[0] - sign * 0.010, loc[1], loc[2]],
-                      max_range[1]:[loc[0], loc[1], loc[2]],
-                      max_range[2]:[loc[0] - sign * 0.008, loc[1], loc[2]]}
+        if handDic.art == ART_STACCATO:
+            arm_motion = {max_range[0]:[loc[0] - sign * 0.010, loc[1], loc[2]],
+                          max_range[1]:[loc[0] - sign * 0.007, loc[1], loc[2]]}
+        else:
+            arm_motion = {max_range[0]:[loc[0] - sign * 0.010, loc[1], loc[2]],
+                          max_range[1]:[loc[0], loc[1], loc[2]],
+                          max_range[2]:[loc[0] - sign * 0.008, loc[1], loc[2]]}
 
         add_motion(fcurves, fcurve_index_dic, bone_name, handDic.art, arm_motion)
 
-        # add motion on Elbo
-        bone_name = "Elbo_T." + lr
-        loc = bones[bone_name].location
-        elbo_motion = {max_range[0] - 1:[loc[0] -sign * 0.005, loc[1] - 0.01, loc[2] + sign * 0.01],
-                       max_range[1] - 1:[loc[0], loc[1], loc[2]],
-                       max_range[2] - 1:[loc[0] -sign * 0.005, loc[1] - 0.01, loc[2] + sign * 0.01]}
+        ## add motion on Elbo
+        #bone_name = "Elbo_T." + lr
+        #loc = bones[bone_name].location
+        #elbo_motion = {max_range[0] - 1:[loc[0] -sign * 0.005, loc[1] - 0.01, loc[2] + sign * 0.01],
+        #               max_range[1] - 1:[loc[0], loc[1], loc[2]],
+        #               max_range[2] - 1:[loc[0] -sign * 0.005, loc[1] - 0.01, loc[2] + sign * 0.01]}
 
-        add_motion(fcurves, fcurve_index_dic, bone_name, handDic.art, elbo_motion)
+        #add_motion(fcurves, fcurve_index_dic, bone_name, handDic.art, elbo_motion)
 
         # add motion on Shoulder_
         bone_name = "Shoulder_T." + lr
@@ -519,7 +533,7 @@ def create_breakdown(armature_name, fcurves, fcurve_index_dic, frame_list, index
         add_motion(fcurves, fcurve_index_dic, bone_name, handDic.art, shoulder_motion)
 
 
-def create_index2little_breakdow(fcurves, fcurve_index_dic, lr, bone_name_key, finger_range, max_range, art):
+def create_index2little_breakdown(fcurves, fcurve_index_dic, lr, bone_name_key, finger_range, max_range, art):
     # get sign from lr
     sign = 1
     if lr == LEFT:
@@ -535,9 +549,13 @@ def create_index2little_breakdow(fcurves, fcurve_index_dic, lr, bone_name_key, f
                   max_range[2]:[loc[0] + 0.0001 * sign, loc[1], loc[2]]}
         add_motion(fcurves, fcurve_index_dic, bone_name, art, motion)
     elif finger_range[0] > 0:
-        motion = {finger_range[0]:[loc[0] + 0.0015 * sign, loc[1], loc[2]],
-                  finger_range[1]:[loc[0], loc[1], loc[2]],
-                  finger_range[2]:[loc[0] + 0.001 * sign, loc[1], loc[2]]}
+        if art == ART_STACCATO:
+            motion = {finger_range[0]:[loc[0] + 0.002 * sign, loc[1], loc[2]],
+                      finger_range[2]:[loc[0] + 0.001 * sign, loc[1], loc[2]]}
+        else:
+            motion = {finger_range[0]:[loc[0] + 0.0015 * sign, loc[1], loc[2]],
+                      finger_range[1]:[loc[0], loc[1], loc[2]],
+                      finger_range[2]:[loc[0] + 0.001 * sign, loc[1], loc[2]]}
         add_motion(fcurves, fcurve_index_dic, bone_name, art, motion)
 
     #  Add Finger 2nd joints Motion
@@ -550,9 +568,13 @@ def create_index2little_breakdow(fcurves, fcurve_index_dic, lr, bone_name_key, f
                   max_range[2]:[loc[0] + 0.0005 * sign, loc[1], loc[2]]}
         add_motion(fcurves, fcurve_index_dic, bone_name, art, motion)
     elif finger_range[0] > 0:
-        motion = {finger_range[0]:[loc[0] + 0.00015 * sign, loc[1], loc[2]],
-                  finger_range[1]:[loc[0], loc[1], loc[2]],
-                  finger_range[2]:[loc[0] + 0.0001 * sign, loc[1], loc[2]]}
+        if art == ART_STACCATO:
+            motion = {finger_range[0]:[loc[0] + 0.0002 * sign, loc[1], loc[2]],
+                      finger_range[2]:[loc[0] + 0.0001 * sign, loc[1], loc[2]]}
+        else:
+            motion = {finger_range[0]:[loc[0] + 0.00015 * sign, loc[1], loc[2]],
+                      finger_range[1]:[loc[0], loc[1], loc[2]],
+                      finger_range[2]:[loc[0] + 0.0001 * sign, loc[1], loc[2]]}
         add_motion(fcurves, fcurve_index_dic, bone_name, art, motion)
 
     #  Add Finger 3rd joints Motion
@@ -565,9 +587,13 @@ def create_index2little_breakdow(fcurves, fcurve_index_dic, lr, bone_name_key, f
                   max_range[2]:[loc[0] - 0.000125 * sign, loc[1], loc[2]]}
         add_motion(fcurves, fcurve_index_dic, bone_name, art, motion)
     elif finger_range[0] > 0:
-        motion = {finger_range[0]:[loc[0] - 0.001 * sign, loc[1], loc[2]],
-                  finger_range[1]:[loc[0], loc[1], loc[2]],
-                  finger_range[2]:[loc[0] - 0.00125 * sign, loc[1], loc[2]]}
+        if art == ART_STACCATO:
+            motion = {finger_range[0]:[loc[0] - 0.001 * sign, loc[1], loc[2]],
+                      finger_range[2]:[loc[0] - 0.0005 * sign, loc[1], loc[2]]}
+        else:
+            motion = {finger_range[0]:[loc[0] - 0.001 * sign, loc[1], loc[2]],
+                      finger_range[1]:[loc[0], loc[1], loc[2]],
+                      finger_range[2]:[loc[0] - 0.00125 * sign, loc[1], loc[2]]}
         add_motion(fcurves, fcurve_index_dic, bone_name, art, motion)
 
 def store_lists(frames, lists):
