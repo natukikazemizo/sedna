@@ -27,7 +27,7 @@ ART_DIC = {
 }
 
 START_FRAME = 3048
-END_FRAME = 3059
+END_FRAME = 3095
 #END_FRAME = 6800
 FRAME_PAR_MEASURE = 48
 MEASURE = 2
@@ -468,12 +468,16 @@ def create_breakdown(armature_name, fcurves, fcurve_index_dic, frame_list, index
         if handDic.thumb[0] == 0:
             motion = {start_frame:[loc[0], loc[1], loc[2] + 0.002],
                       leave_frame:[loc[0], loc[1], loc[2]],
-                      endng_frame:[loc[0], loc[1], loc[2] + 0.0015]}
+                      endng_frame:[loc[0], loc[1], loc[2] + 0.0014]}
             add_motion(fcurves, fcurve_index_dic, bone_name, handDic.art, motion)
         elif handDic.thumb[0] > 0:
-            motion = {handDic.thumb[0]:[loc[0], loc[1], loc[2] + 0.020],
-                      handDic.thumb[1]:[loc[0], loc[1], loc[2]],
-                      handDic.thumb[2]:[loc[0], loc[1], loc[2] + 0.015]}
+            if handDic.art == ART_STACCATO:
+                motion = {handDic.thumb[0]:[loc[0], loc[1], loc[2] + 0.020],
+                          handDic.thumb[2]:[loc[0], loc[1], loc[2] + 0.014]}
+            else:
+                motion = {handDic.thumb[0]:[loc[0], loc[1], loc[2] + 0.010],
+                          handDic.thumb[1]:[loc[0], loc[1], loc[2] - 0.005],
+                          handDic.thumb[2]:[loc[0], loc[1], loc[2] + 0.007]}
             add_motion(fcurves, fcurve_index_dic, bone_name, handDic.art, motion)
 
         # create index to little motion
@@ -495,7 +499,7 @@ def create_breakdown(armature_name, fcurves, fcurve_index_dic, frame_list, index
                            max_range[1]:[loc[0], loc[1] + 0.0007, loc[2]]}
         else:
             hand_motion = {max_range[0]:[loc[0], loc[1] + 0.00005, loc[2]],
-                           max_range[1] + 1:[loc[0], loc[1] + 0.00005, loc[2]],
+                           max_range[1] + 1:[loc[0], loc[1], loc[2]],
                            max_range[2] + 1:[loc[0], loc[1] + 0.00010, loc[2]]}
                 
 
@@ -509,8 +513,8 @@ def create_breakdown(armature_name, fcurves, fcurve_index_dic, frame_list, index
                           max_range[1]:[loc[0] - sign * 0.007, loc[1], loc[2]]}
         else:
             arm_motion = {max_range[0]:[loc[0] - sign * 0.010, loc[1], loc[2]],
-                          max_range[1]:[loc[0], loc[1], loc[2]],
-                          max_range[2]:[loc[0] - sign * 0.008, loc[1], loc[2]]}
+                          max_range[1]:[loc[0] - sign * 0.0049, loc[1], loc[2] - 0.003],
+                          max_range[2]:[loc[0] - sign * 0.007, loc[1], loc[2]]}
 
         add_motion(fcurves, fcurve_index_dic, bone_name, handDic.art, arm_motion)
 
@@ -554,7 +558,7 @@ def create_index2little_breakdown(fcurves, fcurve_index_dic, lr, bone_name_key, 
                       finger_range[2]:[loc[0] + 0.001 * sign, loc[1], loc[2]]}
         else:
             motion = {finger_range[0]:[loc[0] + 0.0015 * sign, loc[1], loc[2]],
-                      finger_range[1]:[loc[0], loc[1], loc[2]],
+                      finger_range[1]:[loc[0] - 0.001 * sign, loc[1], loc[2]],
                       finger_range[2]:[loc[0] + 0.001 * sign, loc[1], loc[2]]}
         add_motion(fcurves, fcurve_index_dic, bone_name, art, motion)
 
@@ -573,7 +577,7 @@ def create_index2little_breakdown(fcurves, fcurve_index_dic, lr, bone_name_key, 
                       finger_range[2]:[loc[0] + 0.0001 * sign, loc[1], loc[2]]}
         else:
             motion = {finger_range[0]:[loc[0] + 0.00015 * sign, loc[1], loc[2]],
-                      finger_range[1]:[loc[0], loc[1], loc[2]],
+                      finger_range[1]:[loc[0] + 0.001 * sign, loc[1], loc[2]],
                       finger_range[2]:[loc[0] + 0.0001 * sign, loc[1], loc[2]]}
         add_motion(fcurves, fcurve_index_dic, bone_name, art, motion)
 
@@ -592,7 +596,7 @@ def create_index2little_breakdown(fcurves, fcurve_index_dic, lr, bone_name_key, 
                       finger_range[2]:[loc[0] - 0.0005 * sign, loc[1], loc[2]]}
         else:
             motion = {finger_range[0]:[loc[0] - 0.001 * sign, loc[1], loc[2]],
-                      finger_range[1]:[loc[0], loc[1], loc[2]],
+                      finger_range[1]:[loc[0] + 0.0001 * sign, loc[1], loc[2]],
                       finger_range[2]:[loc[0] - 0.00125 * sign, loc[1], loc[2]]}
         add_motion(fcurves, fcurve_index_dic, bone_name, art, motion)
 
