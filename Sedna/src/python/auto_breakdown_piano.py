@@ -27,6 +27,8 @@ ART_DIC = {
 }
 
 START_FRAME = 3048
+LORIS_R_START_FRAME = 3120
+LORIS_L_START_FRAME = 3228
 #END_FRAME = 3095
 END_FRAME = 6800
 FRAME_PAR_MEASURE = 48
@@ -436,7 +438,7 @@ def create_breakdown(armature_name, fcurves, fcurve_index_dic, frame_list, index
     print("lr:" + lr + " index:" + str(index + 1) + "frame:" + str(frame_list[index + 1]))
     next_handDic = handNoteDic[frame_list[index + 1]]
 
-    if frame >= START_FRAME and frame <= END_FRAME:
+    if (armature_name == "Dorothy.Armature" and frame >= START_FRAME and frame <= END_FRAME) or (armature_name == "Loris.Armature" and ((lr == LEFT and frame >= LORIS_L_START_FRAME and frame <= END_FRAME) or (lr == RIGHT and frame >= LORIS_R_START_FRAME and frame <= END_FRAME))):
         # SKIP when articulation is blank
         if handDic.art == "":
             return
