@@ -19,3 +19,6 @@ Sedna/data/WhiteCoat.Dorothy_Vertex_Groups.csv
 Sedna/data/custom_shape_settings.csv
 Sedna/data/pose_constraints.csv
 Sedna/data/pose_constraints_edit.csv
+Sedna/src/python/utils/__pycache__/*
+Sedna/src/python/__pycache__/*
+
