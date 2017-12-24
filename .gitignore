@@ -22,3 +22,5 @@ Sedna/data/pose_constraints_edit.csv
 Sedna/src/python/utils/__pycache__/*
 Sedna/src/python/__pycache__/*
 
+Sedna/BackGrounds.blend1
+*.blend1
