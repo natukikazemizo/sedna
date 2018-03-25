@@ -2,10 +2,13 @@
 ## beta-version Classic-Animation-Like-3DCG development envilonment
 ## β版 セルアニメ風動画 開発環境  
 
-## 必要環境  
-* Blender Version 2.78 以降
-* Intel Core i5 相当
-* 16 GB以上のメモリ
+## 必要環境
+* Blender Version 2.79 が動作する環境
+
+## 開発環境  
+* Blender Version 2.79
+* Intel Core i5
+* 16 GB
 
 ## 推奨ソフトウェア
 * GIMP
