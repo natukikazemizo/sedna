@@ -28,11 +28,13 @@
 ## 本プロジェクトで作成したアニメーション（自主制作アニメーション）：
 ### ドロシーの開発環境#0020 "DUET" 曲目：宇宙戦艦ヤマト～オープニングテーマ～
 [ニコニコ動画版](https://t.co/Y8y2gcjrQ8)  
-[youtube版](https://t.co/eQK7ZWCr0Q)  
+[youtube版](https://t.co/eQK7ZWCr0Q)  
+ドロシーの開発環境#0020に対応する.blendファイルは非公開です。
 
-[ドロシーの開発環境#0010 ニコニコ動画版](http://www.nicovideo.jp/watch/sm31660526)  
-[ドロシーの開発環境#0010 youtube版](https://youtu.be/j0UhxwEl4is)  
-[上記の動画ファイルに対応した.blendファイルはこちら](https://bowlroll.net/file/134556)
+### ドロシーの開発環境#0020 "DUET" 曲目：宇宙戦艦ヤマト～オープニングテーマ～
+[ニコニコ動画版](http://www.nicovideo.jp/watch/sm31660526)  
+[youtube版](https://youtu.be/j0UhxwEl4is)  
+[ドロシーの開発環境#0010に対応した.blendファイルはこちら](https://bowlroll.net/file/134556)
 
 ## issueの運用フロー
 2017.09.06 Version
