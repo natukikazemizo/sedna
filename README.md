@@ -38,8 +38,8 @@
 
 
 ## License ライセンス
-This software is released under the MIT License, see LICENSE.txt.
-このソフトウェアは、MITライセンスのもとで公開されている。LICENSE.txtを見てください。
+This software is released under the MIT License, see License.txt.
+このソフトウェアは、MITライセンスのもとで公開されている。License.txtを見てください。
 
 ## その他詳細情報
 [こちらのwikiを参照してください](../../wiki/Home)
