@@ -38,7 +38,7 @@
 
 
 ## License ライセンス
-MIT
+[MIT](./Licence.txt)
 
 ## その他詳細情報
 [こちらのwikiを参照してください](../../wiki/Home)
